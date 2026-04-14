@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.10)
-project(network)
+project(imcore)
 
 # 设置C++标准
 set(CMAKE_CXX_STANDARD 11)
@@ -17,6 +17,10 @@ file(GLOB_RECURSE IMPDU_HEADERS "src/impdu/*.h" "src/impdu/*.hpp")
 file(GLOB_RECURSE IMPDU_SOURCES "src/impdu/*.cpp" "src/impdu/*.cc" "src/impdu/*.c")
 file(GLOB_RECURSE PB_HEADERS "src/pbgen/*.h" "src/pbgen/*.hpp")
 file(GLOB_RECURSE PB_SOURCES "src/pbgen/*.cpp" "src/pbgen/*.cc" "src/pbgen/*.c")
+file(GLOB_RECURSE SECURITY_HEADERS "src/security/*.h" "src/security/*.hpp")
+file(GLOB_RECURSE SECURITY_SOURCES "src/security/*.cpp" "src/security/*.cc" "src/security/*.c")
+file(GLOB_RECURSE JSONCPP_HEADERS "src/jsoncpp/*.h" "src/jsoncpp/*.hpp")
+file(GLOB_RECURSE JSONCPP_SOURCES "src/jsoncpp/*.cpp" "src/jsoncpp/*.cc" "src/jsoncpp/*.c")
 
 ########################################################################
 # 平台差异化处理
@@ -76,6 +80,9 @@ include_directories(
     src/impdu
     src/pbgen
     src/utility
+    src/security
+    src/jsoncpp
+    src/jsoncpp/json
     third/protobuf/include
     ${LOG_DIR}
 )
@@ -85,12 +92,14 @@ include_directories(
 #aux_source_directory(src SRC_LIST1)
 #aux_source_directory(src/impdu SRC_LIST2)
 # 创建库目标
-add_library(network STATIC
+add_library(imcore STATIC
     ${MAIN_HEADERS} ${MAIN_SOURCES}
     ${NETCORE_HEADERS} ${NETCORE_SOURCES}
     ${UTILITY_HEADERS} ${UTILITY_SOURCES}
     ${IMPDU_HEADERS} ${IMPDU_SOURCES}
     ${PB_HEADERS} ${PB_SOURCES}
+    ${SECURITY_HEADERS} ${SECURITY_SOURCES}
+    ${JSONCPP_HEADERS} ${JSONCPP_SOURCES}
     ${YAOLOG_HEADERS} ${YAOLOG_SOURCES}
 )
 
@@ -105,6 +114,10 @@ source_group("Protocol" FILES ${IMPDU_HEADERS})
 source_group("Protocol" FILES ${IMPDU_SOURCES})
 source_group("Header Files" FILES ${MAIN_HEADERS})
 source_group("Source Files" FILES ${MAIN_SOURCES})
+source_group("Security" FILES ${SECURITY_HEADERS})
+source_group("Security" FILES ${SECURITY_SOURCES})
+source_group("Jsoncpp" FILES ${JSONCPP_HEADERS})
+source_group("Jsoncpp" FILES ${JSONCPP_SOURCES})
 if(WIN32)
     source_group("Yaolog" FILES ${YAOLOG_SOURCES})
     source_group("Yaolog" FILES ${YAOLOG_HEADERS})
@@ -116,7 +129,7 @@ set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin")
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin")
 
 # 链接库
-target_link_libraries(network
+target_link_libraries(imcore
     ${PLATFORM_LIBS}
 )
 
