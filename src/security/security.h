@@ -22,24 +22,13 @@ typedef int socklen_t;
 #else
 #include <stdint.h>
 #endif
-typedef unsigned char uchar_t;
 
-#ifdef WIN32
-#define DLL_MODIFIER __declspec(dllexport)
-#else
-#define DLL_MODIFIER
-#endif
+typedef unsigned char uchar_t;
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-#ifdef __ANDROID__
-jbyteArray Java_com_mogujie_tt_Security_EncryptMsg(JNIEnv* env, jobject obj, jstring jstr);
-jbyteArray Java_com_mogujie_tt_Security_DecryptMsg(JNIEnv* env, jobject obj, jstring jstr);
-jbyteArray Java_com_mogujie_tt_Security_EncryptPass(JNIEnv* env, jobject obj, jstring jstr);
-
-#else
 /**
  *  对消息加密
  *
@@ -50,7 +39,7 @@ jbyteArray Java_com_mogujie_tt_Security_EncryptPass(JNIEnv* env, jobject obj, js
  *
  *  @return 返回 0-成功; 其他-失败
  */
-DLL_MODIFIER int EncryptMsg(const char* pInData, uint32_t nInLen, char** pOutData, uint32_t& nOutLen);
+int EncryptMsg(const char* pInData, uint32_t nInLen, char** pOutData, uint32_t& nOutLen);
 
 /**
  *  对消息解密
@@ -62,7 +51,7 @@ DLL_MODIFIER int EncryptMsg(const char* pInData, uint32_t nInLen, char** pOutDat
  *
  *  @return 返回 0-成功; 其他-失败
  */
-DLL_MODIFIER int DecryptMsg(const char* pInData, uint32_t nInLen, char** pOutData, uint32_t& nOutLen);
+int DecryptMsg(const char* pInData, uint32_t nInLen, char** pOutData, uint32_t& nOutLen);
 
 /**
  *  对密码进行加密
@@ -75,15 +64,14 @@ DLL_MODIFIER int DecryptMsg(const char* pInData, uint32_t nInLen, char** pOutDat
  *
  *  @return 返回 0-成功; 其他-失败
  */
-DLL_MODIFIER int EncryptPass(const char* pInData, uint32_t nInLen, char** pOutData, uint32_t& nOutLen);
+int EncryptPass(const char* pInData, uint32_t nInLen, char** pOutData, uint32_t& nOutLen);
+
 /**
  *  释放资源
  *
  *  @param pOutData 需要释放的资源
  */
-DLL_MODIFIER void Free(char* pOutData);
-
-#endif
+void Free(char* pOutData);
 
 #ifdef __cplusplus
 }
