@@ -41,4 +41,4 @@ build/
 
 # pbgen
 pbgen/
-!readme.txt
+ttidl/
