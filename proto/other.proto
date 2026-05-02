@@ -1,4 +1,5 @@
-package imcore.other;
+
+package teamtalk.imcore.ttidl.other;
 
 // option java_outer_classname = "TTIMMessage";
 // option java_package = "com.polaris-hzn8.protobuf";

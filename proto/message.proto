@@ -1,6 +1,7 @@
-package imcore.message;
 
-import "base_define.proto";
+package teamtalk.imcore.ttidl.message;
+
+import "common.proto";
 
 // option java_outer_classname = "TTIMMessage";
 // option java_package = "com.polaris-hzn8.protobuf";
@@ -14,7 +15,7 @@ message IMMsgData {
     required uint32 to_session_id = 2;  //消息接受方
     required uint32 msg_id = 3;
     required uint32 create_time = 4;
-    required base_define.MsgType msg_type = 5;
+    required common.MsgType msg_type = 5;
     required bytes msg_data = 6;
     optional bytes attach_data = 20;
 }
@@ -24,7 +25,7 @@ message IMMsgDataAck {
     required uint32 user_id = 1;  //发送此信令的用户id
     required uint32 session_id = 2;
     required uint32 msg_id = 3;
-    required base_define.SessionType session_type = 4;
+    required common.SessionType session_type = 4;
 }
 
 message IMMsgDataReadAck {
@@ -32,7 +33,7 @@ message IMMsgDataReadAck {
     required uint32 user_id = 1;  //发送此信令的用户id
     required uint32 session_id = 2;
     required uint32 msg_id = 3;
-    required base_define.SessionType session_type = 4;
+    required common.SessionType session_type = 4;
 }
 
 message IMMsgDataReadNotify {
@@ -40,7 +41,7 @@ message IMMsgDataReadNotify {
     required uint32 user_id = 1;  //发送此信令的用户id
     required uint32 session_id = 2;
     required uint32 msg_id = 3;
-    required base_define.SessionType session_type = 4;
+    required common.SessionType session_type = 4;
 }
 
 message IMClientTimeReq {
@@ -62,14 +63,14 @@ message IMUnreadMsgCntRsp {
     // cmd id:		0x0308
     required uint32 user_id = 1;
     required uint32 total_cnt = 2;
-    repeated base_define.UnreadInfo unreadinfo_list = 3;
+    repeated common.UnreadInfo unreadinfo_list = 3;
     optional bytes attach_data = 20;
 }
 
 message IMGetMsgListReq {
     // cmd id:		0x0309
     required uint32 user_id = 1;
-    required base_define.SessionType session_type = 2;
+    required common.SessionType session_type = 2;
     required uint32 session_id = 3;
     required uint32 msg_id_begin = 4;
     required uint32 msg_cnt = 5;
@@ -82,17 +83,17 @@ message IMGetMsgListReq {
 message IMGetMsgListRsp {
     // cmd id:		0x030a
     required uint32 user_id = 1;
-    required base_define.SessionType session_type = 2;
+    required common.SessionType session_type = 2;
     required uint32 session_id = 3;
     required uint32 msg_id_begin = 4;
-    repeated base_define.MsgInfo msg_list = 5;
+    repeated common.MsgInfo msg_list = 5;
     optional bytes attach_data = 20;
 }
 
 message IMGetLatestMsgIdReq {
     // cmd id: 		0x030b
     required uint32 user_id = 1;
-    required base_define.SessionType session_type = 2;
+    required common.SessionType session_type = 2;
     required uint32 session_id = 3;
     optional bytes attach_data = 20;
 }
@@ -100,7 +101,7 @@ message IMGetLatestMsgIdReq {
 message IMGetLatestMsgIdRsp {
     // cmd id:		0x030c
     required uint32 user_id = 1;
-    required base_define.SessionType session_type = 2;
+    required common.SessionType session_type = 2;
     required uint32 session_id = 3;
     required uint32 latest_msg_id = 4;
     optional bytes attach_data = 20;
@@ -109,7 +110,7 @@ message IMGetLatestMsgIdRsp {
 message IMGetMsgByIdReq {
     // cmd id: 		0x030d
     required uint32 user_id = 1;
-    required base_define.SessionType session_type = 2;
+    required common.SessionType session_type = 2;
     required uint32 session_id = 3;
     repeated uint32 msg_id_list = 4;
     optional bytes attach_data = 20;
@@ -118,8 +119,8 @@ message IMGetMsgByIdReq {
 message IMGetMsgByIdRsp {
     // cmd id:		0x030e
     required uint32 user_id = 1;
-    required base_define.SessionType session_type = 2;
+    required common.SessionType session_type = 2;
     required uint32 session_id = 3;
-    repeated base_define.MsgInfo msg_list = 4;
+    repeated common.MsgInfo msg_list = 4;
     optional bytes attach_data = 20;
 }

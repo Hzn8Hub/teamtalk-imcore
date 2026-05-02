@@ -1,6 +1,7 @@
-package imcore.login;
 
-import "base_define.proto";
+package teamtalk.imcore.ttidl.login;
+
+import "common.proto";
 
 // option java_outer_classname = "TTIMMessage";
 // option java_package = "com.polaris-hzn8.protobuf";
@@ -15,7 +16,7 @@ message IMMsgServReq {
 
 message IMMsgServRsp {
     // cmd id:		0x0102
-    required base_define.ResultType result_code = 1;
+    required common.ResultType result_code = 1;
     optional string prior_ip = 2;
     optional string backip_ip = 3;
     optional uint32 port = 4;
@@ -25,18 +26,18 @@ message IMLoginReq {
     // cmd id:		0x0103
     required string user_name = 1;
     required string password = 2;
-    required base_define.UserStatType online_status = 3;
-    required base_define.ClientType client_type = 4;
+    required common.UserStatType online_status = 3;
+    required common.ClientType client_type = 4;
     optional string client_version = 5;
 }
 
 message IMLoginRes {
     // cmd id:		0x0104
     required uint32 server_time = 1;
-    required base_define.ResultType result_code = 2;
+    required common.ResultType result_code = 2;
     optional string result_string = 3;
-    optional base_define.UserStatType online_status = 4;
-    optional base_define.UserInfo user_info = 5;
+    optional common.UserStatType online_status = 4;
+    optional common.UserInfo user_info = 5;
 }
 
 message IMLogoutReq {
@@ -51,14 +52,14 @@ message IMLogoutRsp {
 message IMKickUser {
     // cmd id:		0x0107
     required uint32 user_id = 1;
-    required base_define.KickReasonType kick_reason = 2;
+    required common.KickReasonType kick_reason = 2;
 }
 
 message IMDeviceTokenReq {
     // cmd id:		0x0108
     required uint32 user_id = 1;
     required string device_token = 2;
-    optional base_define.ClientType client_type = 3;
+    optional common.ClientType client_type = 3;
     optional bytes attach_data = 20;
 }
 
@@ -128,7 +129,7 @@ message IMRegistReq {
 message IMRegistRes {
     // cmd id:        0x0111
     required string user_name = 1;
-    required base_define.ResultType result_code = 2;
+    required common.ResultType result_code = 2;
     optional string result_string = 3;
     optional uint32 user_id = 4;
     optional bytes attach_data = 20;

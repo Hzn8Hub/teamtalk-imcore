@@ -23,8 +23,8 @@ class ProtoBuildTool:
         # 配置路径
         self.src_dir = self.script_dir
         self.gen_dir = self.script_dir / "gen"
-        self.dest_header_dir = self.script_dir.parent / "include" / "imcore" / "ttidl"
-        self.dest_source_dir = self.script_dir.parent / "src" / "imcore" / "ttidl"
+        self.dest_header_dir = self.script_dir.parent / "include" / "teamtalk" / "imcore" / "ttidl"
+        self.dest_source_dir = self.script_dir.parent / "src" / "teamtalk" / "imcore" / "ttidl"
         
         # protoc 路径（相对于脚本目录）
         protoc_bin = "protoc.exe" if platform.system() == "Windows" else "protoc"

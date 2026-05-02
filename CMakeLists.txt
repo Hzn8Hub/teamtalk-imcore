@@ -49,7 +49,8 @@ endif()
 ########################################################################
 # 头文件路径
 include_directories(
-    ${CMAKE_SOURCE_DIR}/include
+    ${CMAKE_SOURCE_DIR}/include/teamtalk/imcore
+    ${CMAKE_SOURCE_DIR}/include/teamtalk/imcore/ttidl
     ${SDK_DIR}/protobuf/include                 # protobuf 头文件
     ${SDK_DIR}/spdlog/include                   # spdlog 头文件（如果使用）
 )

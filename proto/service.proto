@@ -1,6 +1,7 @@
-package imcore.server;
 
-import "base_define.proto";
+package teamtalk.imcore.ttidl.server;
+
+import "common.proto";
 
 // option java_outer_classname = "TTIMMessage";
 // option java_package = "com.polaris-hzn8.protobuf";
@@ -29,7 +30,7 @@ message IMValidateRsp {
     required string user_name = 1;
     required uint32 result_code = 2;
     optional string result_string = 3;
-    optional base_define.UserInfo user_info = 4;
+    optional common.UserInfo user_info = 4;
     optional bytes attach_data = 20;
 }
 
@@ -43,7 +44,7 @@ message IMGetDeviceTokenReq {
 // db_proxy
 message IMGetDeviceTokenRsp {
     // cmd id:	0x0706
-    repeated base_define.UserTokenInfo user_token_info = 1;
+    repeated common.UserTokenInfo user_token_info = 1;
     optional bytes attach_data = 20;
 }
 
@@ -54,7 +55,7 @@ message IMRoleSet {
 
 message IMOnlineUserInfo {
     // cmd id:	0x0708
-    repeated base_define.ServerUserStat user_stat_list = 1;
+    repeated common.ServerUserStat user_stat_list = 1;
 }
 
 message IMMsgServInfo {
@@ -71,7 +72,7 @@ message IMUserStatusUpdate {
     // cmd id:	0x070a
     required uint32 user_status = 1;
     required uint32 user_id = 2;
-    required base_define.ClientType client_type = 3;
+    required common.ClientType client_type = 3;
 }
 
 message IMUserCntUpdate {
@@ -83,7 +84,7 @@ message IMUserCntUpdate {
 message IMServerKickUser {
     // cmd id:	0x070d
     required uint32 user_id = 1;
-    required base_define.ClientType client_type = 2;
+    required common.ClientType client_type = 2;
     required uint32 reason = 3;  // KICK_REASON_DUPLICATE_USER = 1;
 }
 
@@ -97,12 +98,12 @@ message IMPushToUserReq {
     // cmd id:	0x070f
     required string flash = 1;
     required string data = 2;
-    repeated base_define.UserTokenInfo user_token_list = 3;
+    repeated common.UserTokenInfo user_token_list = 3;
 }
 
 message IMPushToUserRsp {
     // cmd id:	0x0710
-    repeated base_define.PushResult push_result_list = 1;
+    repeated common.PushResult push_result_list = 1;
 }
 
 message IMGroupGetShieldReq {
@@ -115,7 +116,7 @@ message IMGroupGetShieldReq {
 message IMGroupGetShieldRsp {
     // cmd id: 			0x0712
     required uint32 group_id = 1;
-    repeated base_define.ShieldStatus shield_status_list = 2;
+    repeated common.ShieldStatus shield_status_list = 2;
     optional bytes attach_data = 20;
 }
 
@@ -125,7 +126,7 @@ message IMFileTransferReq {
     required uint32 to_user_id = 2;
     required string file_name = 3;
     required uint32 file_size = 4;
-    required base_define.TransferFileType trans_mode = 5;
+    required common.TransferFileType trans_mode = 5;
     optional bytes attach_data = 20;
 }
 
@@ -137,7 +138,7 @@ message IMFileTransferRsp {
     optional string file_name = 4;
     optional uint32 file_size = 5;
     optional string task_id = 6;
-    optional base_define.TransferFileType trans_mode = 7;
+    optional common.TransferFileType trans_mode = 7;
     optional bytes attach_data = 20;
 }
 
@@ -147,5 +148,5 @@ message IMFileServerIPReq {
 
 message IMFileServerIPRsp {
     // cmd id:			0x0718
-    repeated base_define.IpAddr ip_addr_list = 1;
+    repeated common.IpAddr ip_addr_list = 1;
 }
