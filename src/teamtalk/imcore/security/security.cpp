@@ -6,21 +6,25 @@
  brief:
 */
 
+#include <string>
+#include <teamtalk/imcore/security/security.h>
 #include "md5.h"
 #include "aes.h"
+#include "base64.h"
 #include "aes_locl.h"
-#include "security.h"
 
-uint32_t ReadUint32(uchar_t* buf) {
+namespace teamtalk::imcore::security {
+
+uint32_t ReadUint32(unsigned char* buf) {
   uint32_t data = (buf[0] << 24) | (buf[1] << 16) | (buf[2] << 8) | buf[3];
   return data;
 }
 
-void WriteUint32(uchar_t* buf, uint32_t data) {
-  buf[0] = static_cast<uchar_t>(data >> 24);
-  buf[1] = static_cast<uchar_t>((data >> 16) & 0xFF);
-  buf[2] = static_cast<uchar_t>((data >> 8) & 0xFF);
-  buf[3] = static_cast<uchar_t>(data & 0xFF);
+void WriteUint32(unsigned char* buf, uint32_t data) {
+  buf[0] = static_cast<unsigned char>(data >> 24);
+  buf[1] = static_cast<unsigned char>((data >> 16) & 0xFF);
+  buf[2] = static_cast<unsigned char>((data >> 8) & 0xFF);
+  buf[3] = static_cast<unsigned char>(data & 0xFF);
 }
 
 int EncryptMsg(const char* pInData, uint32_t nInLen, char** ppOutData, uint32_t& nOutLen) {
@@ -49,9 +53,9 @@ int EncryptMsg(const char* pInData, uint32_t nInLen, char** ppOutData, uint32_t&
   }
 
   free(pData);
-  string strEnc((char*)pEncData, nEncryptLen);
+  std::string strEnc((char*)pEncData, nEncryptLen);
   free(pEncData);
-  string strDec = base64_encode(strEnc);
+  std::string strDec = base64_encode(strEnc);
   nOutLen = (uint32_t)strDec.length();
 
   char* pTmp = (char*)malloc(nOutLen + 1);
@@ -65,7 +69,7 @@ int DecryptMsg(const char* pInData, uint32_t nInLen, char** ppOutData, uint32_t&
   if (pInData == NULL || nInLen <= 0) {
     return -1;
   }
-  string strInData(pInData, nInLen);
+  std::string strInData(pInData, nInLen);
   std::string strResult = base64_decode(strInData);
   uint32_t nLen = (uint32_t)strResult.length();
   if (nLen == 0) {
@@ -89,7 +93,7 @@ int DecryptMsg(const char* pInData, uint32_t nInLen, char** ppOutData, uint32_t&
     AES_decrypt(pData + i * 16, (unsigned char*)pTmp + i * 16, &aesKey);
   }
 
-  uchar_t* pStart = (uchar_t*)pTmp + nLen - 4;
+  unsigned char* pStart = (unsigned char*)pTmp + nLen - 4;
   nOutLen = ReadUint32(pStart);
   //        printf("%u\n", nOutLen);
   if (nOutLen > nLen) {
@@ -119,3 +123,6 @@ void Free(char* pOutData) {
     pOutData = NULL;
   }
 }
+
+}  // namespace teamtalk::imcore::security
+

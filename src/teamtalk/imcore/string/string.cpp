@@ -1,7 +1,15 @@
-#include "string.h"
+/**
+ * @author: luochenhao
+ * @email: lch2022fox@163.com
+ * @time: Fri 01 May 2026 21:20:27 CST
+ * @brief: 
+*/
 
 #include <cstring>
 #include <stdexcept>
+#include <teamtalk/imcore/string/string.h>
+
+namespace teamtalk::imcore::string {
 
 std::string url_encode(const std::string& s) {
   std::string out;
@@ -78,3 +86,5 @@ const char* mem_find(const char* src_str, size_t src_len, const char* sub_str, s
   }
   return nullptr;
 }
+
+}  // namespace teamtalk::imcore::string

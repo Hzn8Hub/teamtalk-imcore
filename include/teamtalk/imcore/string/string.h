@@ -1,8 +1,17 @@
-#ifndef IMCORE_STRING_H_
-#define IMCORE_STRING_H_
+/**
+ * @author: luochenhao
+ * @email: lch2022fox@163.com
+ * @time: Fri 01 May 2026 21:41:56 CST
+ * @brief: 字符串相关函数
+*/
+
+#ifndef TEAMTALK_IMCORE_STRING_STRING_H_
+#define TEAMTALK_IMCORE_STRING_STRING_H_
 
 #include <cctype>
 #include <string>
+
+namespace teamtalk::imcore::string {
 
 /// @brief 将数字（0-15）转换为对应的大写十六进制字符
 inline unsigned char to_hex(unsigned char x) {
@@ -38,4 +47,6 @@ bool str_to_int(const std::string& s, int& out);
 /// @return 找到返回匹配位置指针，未找到返回 nullptr
 const char* mem_find(const char* src_str, size_t src_len, const char* sub_str, size_t sub_len, bool forward = true);
 
-#endif  // IMCORE_STRING_H_
+}  // namespace teamtalk::imcore::string
+
+#endif  // TEAMTALK_IMCORE_STRING_STRING_H_

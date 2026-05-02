@@ -6,9 +6,9 @@
  brief:
 */
 
-#include "md5.h"
 #include <stdio.h>
 #include <string.h>
+#include "md5.h"
 
 typedef struct {
   unsigned int state[4];

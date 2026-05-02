@@ -1,5 +1,6 @@
-#ifndef SLOG_H
-#define SLOG_H
+
+#ifndef TEAMTALK_IMCORE_SLOG_SLOG_H_
+#define TEAMTALK_IMCORE_SLOG_SLOG_H_
 
 #include <memory>
 
@@ -24,6 +25,8 @@
  * 输出格式：
  *   [2026-04-12 10:30:01.234] [INFO ] <msg_server.cpp>|<45>|<handleLogin>| server started
  */
+
+namespace teamtalk::imcore::slog {
 
 // -------------------------------------------------------------
 // 日志级别
@@ -97,4 +100,6 @@ class Slog {
 #define log_fatal(fmt, ...) \
   Slog::Default().Write(SlogLevel::kFatal, SLOG_FILENAME, __LINE__, __FUNCTION__, fmt, ##__VA_ARGS__)
 
-#endif  // SLOG_H
+}  // namespace teamtalk::imcore::slog
+
+#endif  // TEAMTALK_IMCORE_SLOG_SLOG_H_

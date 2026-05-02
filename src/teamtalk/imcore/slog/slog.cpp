@@ -1,20 +1,22 @@
-#include "slog.h"
 
+#include <mutex>
+#include <string>
+#include <vector>
+#include <memory>
 #include <cstdarg>
 #include <cstdio>
 #include <cstring>
 #include <fstream>
-#include <memory>
-#include <mutex>
-#include <string>
-#include <vector>
 
-#include "../string/string.h"
+#include <teamtalk/imcore/slog/slog.h>
+#include <teamtalk/imcore/string/string.h>
 
 #include <spdlog/async.h>
+#include <spdlog/spdlog.h>
 #include <spdlog/sinks/rotating_file_sink.h>
 #include <spdlog/sinks/stdout_color_sinks.h>
-#include <spdlog/spdlog.h>
+
+namespace teamtalk::imcore::slog {
 
 static constexpr int kMaxMsgLen = 1024 * 4;
 
@@ -237,3 +239,5 @@ Slog& Slog::Default() {
   static Slog instance;
   return instance;
 }
+
+}  // namespace teamtalk::imcore::slog

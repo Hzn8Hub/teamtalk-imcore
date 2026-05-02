@@ -1,15 +1,15 @@
-/*
- Reviser: Polaris_hzn8
- Email: 3453851623@qq.com
- filename: singleton.h
- Update Time: Tue 13 Jun 2023 18:08:36 CST
- brief:
-    单例模式模板类Singleton（非线程安全）
-    使用该模板类可以方便地实现各种类的单例模式
+/**
+ * @author: luochenhao
+ * @email: lch2022fox@163.com
+ * @time: Fri 01 May 2026 21:08:47 CST
+ * @brief: 单例模式模板类Singleton（非线程安全）
+ * @note: 该模板类只能用于非线程环境，不支持多线程环境下的单例模式
 */
 
-#ifndef BASE_SINGLETON_H_
-#define BASE_SINGLETON_H_
+#ifndef TEAMTALK_IMCORE_COMMON_SINGLETON_H_
+#define TEAMTALK_IMCORE_COMMON_SINGLETON_H_
+
+namespace teamtalk::imcore::common {
 
 template <typename T>
 class Singleton {
@@ -55,4 +55,6 @@ class Singleton {
 template <typename T>
 T* Singleton<T>::s_instance = NULL;
 
-#endif
+}  // namespace teamtalk::imcore::common
+
+#endif // TEAMTALK_IMCORE_COMMON_SINGLETON_H_

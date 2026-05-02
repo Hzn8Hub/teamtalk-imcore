@@ -1,6 +1,8 @@
 
-#include "str_explode.h"
 #include <cstring>
+#include <teamtalk/imcore/string/str_explode.h>
+
+namespace teamtalk::imcore::string {
 
 CStrExplode::CStrExplode(char* str, char separator) {
   item_cnt_ = 1;
@@ -41,3 +43,5 @@ CStrExplode::~CStrExplode() {
   }
   delete[] item_list_;
 }
+
+}  // namespace teamtalk::imcore::string

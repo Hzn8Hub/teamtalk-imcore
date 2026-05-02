@@ -1,33 +1,16 @@
-/*
- Reviser: Polaris_hzn8
- Email: 3453851623@qq.com
- filename: security.h
- Update Time: Mon 12 Jun 2023 08:49:43 CST
- brief:
+/**
+ * @author: luochenhao
+ * @email: lch2022fox@163.com
+ * @time: Fri 01 May 2026 21:09:37 CST
+ * @brief: 安全相关函数
 */
 
-#ifndef __SECURITY_H__
-#define __SECURITY_H__
+#ifndef TEAMTALK_IMCORE_SECURITY_SECURITY_H_
+#define TEAMTALK_IMCORE_SECURITY_SECURITY_H_
 
-#ifdef _WIN32
-typedef char int8_t;
-typedef short int16_t;
-typedef int int32_t;
-typedef long long int64_t;
-typedef unsigned char uint8_t;
-typedef unsigned short uint16_t;
-typedef unsigned int uint32_t;
-typedef unsigned long long uint64_t;
-typedef int socklen_t;
-#else
 #include <stdint.h>
-#endif
 
-typedef unsigned char uchar_t;
-
-#ifdef __cplusplus
-extern "C" {
-#endif
+namespace teamtalk::imcore::security {
 
 /**
  *  对消息加密
@@ -39,6 +22,8 @@ extern "C" {
  *
  *  @return 返回 0-成功; 其他-失败
  */
+
+
 int EncryptMsg(const char* pInData, uint32_t nInLen, char** pOutData, uint32_t& nOutLen);
 
 /**
@@ -73,8 +58,6 @@ int EncryptPass(const char* pInData, uint32_t nInLen, char** pOutData, uint32_t&
  */
 void Free(char* pOutData);
 
-#ifdef __cplusplus
-}
-#endif
+}  // namespace teamtalk::imcore::security
 
-#endif
+#endif // TEAMTALK_IMCORE_SECURITY_SECURITY_H_
