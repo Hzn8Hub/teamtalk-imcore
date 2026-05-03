@@ -3,7 +3,7 @@
  * @email: lch2022fox@163.com
  * @time: Fri 01 May 2026 21:41:56 CST
  * @brief: 字符串相关函数
-*/
+ */
 
 #ifndef TEAMTALK_IMCORE_STRING_STRING_H_
 #define TEAMTALK_IMCORE_STRING_STRING_H_

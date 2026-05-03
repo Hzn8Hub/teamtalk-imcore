@@ -16,27 +16,18 @@
 namespace teamtalk::imcore::netlib {
 
 // 将消息对象转换为字节流 并发送给对应的连接
-int SendMessageLite(
-  CImConn* conn,
-  uint16_t sid,
-  uint16_t cid,
-  const ::google::protobuf::MessageLite* message);
+int SendMessageLite(CImConn* conn, uint16_t sid, uint16_t cid, const ::google::protobuf::MessageLite* message);
 
 int SendMessageLite(
-  CImConn* conn,
-  uint16_t sid,
-  uint16_t cid,
-  uint16_t seq_num,
-  const ::google::protobuf::MessageLite* message);
+  CImConn* conn, uint16_t sid, uint16_t cid, uint16_t seq_num, const ::google::protobuf::MessageLite* message);
 
-int SendMessageLite(
-  CImConn* conn,
-  uint16_t sid,
-  uint16_t cid,
-  uint16_t seq_num,
-  uint16_t error,
-  const ::google::protobuf::MessageLite* message);
+int SendMessageLite(CImConn* conn,
+                    uint16_t sid,
+                    uint16_t cid,
+                    uint16_t seq_num,
+                    uint16_t error,
+                    const ::google::protobuf::MessageLite* message);
 
 }  // namespace teamtalk::imcore::netlib
 
-#endif // TEAMTALK_IMCORE_NETLIB_IMCONN_IM_CONN_UTIL_H_
+#endif  // TEAMTALK_IMCORE_NETLIB_IMCONN_IM_CONN_UTIL_H_

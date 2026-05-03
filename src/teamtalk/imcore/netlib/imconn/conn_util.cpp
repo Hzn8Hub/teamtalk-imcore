@@ -12,10 +12,7 @@
 
 namespace teamtalk::imcore::netlib {
 
-int SendMessageLite(
-  CImConn* conn,
-  uint16_t sid, uint16_t cid,
-  const ::google::protobuf::MessageLite* message) {
+int SendMessageLite(CImConn* conn, uint16_t sid, uint16_t cid, const ::google::protobuf::MessageLite* message) {
   CImPdu pdu;
   pdu.SetPBMsg(message);
   pdu.SetServiceId(sid);
@@ -24,9 +21,7 @@ int SendMessageLite(
 }
 
 int SendMessageLite(
-  CImConn* conn,
-  uint16_t sid, uint16_t cid, uint16_t seq_num,
-  const ::google::protobuf::MessageLite* message) {
+  CImConn* conn, uint16_t sid, uint16_t cid, uint16_t seq_num, const ::google::protobuf::MessageLite* message) {
   CImPdu pdu;
   pdu.SetPBMsg(message);
   pdu.SetServiceId(sid);
@@ -35,10 +30,12 @@ int SendMessageLite(
   return conn->SendPdu(&pdu);
 }
 
-int SendMessageLite(
-  CImConn* conn,
-  uint16_t sid, uint16_t cid, uint16_t seq_num, uint16_t error,
-  const ::google::protobuf::MessageLite* message) {
+int SendMessageLite(CImConn* conn,
+                    uint16_t sid,
+                    uint16_t cid,
+                    uint16_t seq_num,
+                    uint16_t error,
+                    const ::google::protobuf::MessageLite* message) {
   CImPdu pdu;
   pdu.SetPBMsg(message);
   pdu.SetServiceId(sid);

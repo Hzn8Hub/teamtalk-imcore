@@ -4,7 +4,7 @@
  * @time: Fri 01 May 2026 21:08:47 CST
  * @brief: 单例模式模板类Singleton（非线程安全）
  * @note: 该模板类只能用于非线程环境，不支持多线程环境下的单例模式
-*/
+ */
 
 #ifndef TEAMTALK_IMCORE_COMMON_SINGLETON_H_
 #define TEAMTALK_IMCORE_COMMON_SINGLETON_H_
@@ -57,4 +57,4 @@ T* Singleton<T>::s_instance = NULL;
 
 }  // namespace teamtalk::imcore::common
 
-#endif // TEAMTALK_IMCORE_COMMON_SINGLETON_H_
+#endif  // TEAMTALK_IMCORE_COMMON_SINGLETON_H_

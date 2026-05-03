@@ -125,4 +125,3 @@ void Free(char* pOutData) {
 }
 
 }  // namespace teamtalk::imcore::security
-

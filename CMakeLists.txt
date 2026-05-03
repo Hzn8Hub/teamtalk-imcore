@@ -52,14 +52,16 @@ include_directories(
     ${CMAKE_SOURCE_DIR}/include
     ${CMAKE_SOURCE_DIR}/include/teamtalk/imcore/ttidl
     ${SDK_DIR}/protobuf/include                 # protobuf 头文件
-    ${SDK_DIR}/spdlog/include                   # spdlog 头文件（如果使用）
-    ${SDK_DIR}/jsoncpp/include                  # spdlog 头文件（如果使用）
+    ${SDK_DIR}/spdlog/include                   # spdlog 头文件
+    ${SDK_DIR}/jsoncpp/include                  # jsoncpp 头文件
+    ${SDK_DIR}/sqlite3/include                  # sqlite3 头文件
 )
 
 # 链接库路径
 link_directories(
     ${SDK_DIR}/protobuf/lib                     # protobuf 库
     ${SDK_DIR}/jsoncpp/lib                      # jsoncpp 库
+    ${SDK_DIR}/sqlite3/lib                      # sqlite3 库
 )
 
 ########################################################################
@@ -83,6 +85,7 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin")
 target_link_libraries(teamtalk-imcore 
     protobuf-lite
     jsoncpp
+    sqlite3
     ${PLATFORM_LIBS}
 )
 

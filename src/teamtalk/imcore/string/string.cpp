@@ -2,8 +2,8 @@
  * @author: luochenhao
  * @email: lch2022fox@163.com
  * @time: Fri 01 May 2026 21:20:27 CST
- * @brief: 
-*/
+ * @brief:
+ */
 
 #include <cstring>
 #include <stdexcept>

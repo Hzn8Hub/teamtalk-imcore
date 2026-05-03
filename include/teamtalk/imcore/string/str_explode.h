@@ -3,7 +3,7 @@
  * @email: lch2022fox@163.com
  * @time: Fri 01 May 2026 21:42:29 CST
  * @brief: 字符串拆分类
-*/
+ */
 
 #ifndef TEAMTALK_IMCORE_STRING_STR_EXPLODE_H_
 #define TEAMTALK_IMCORE_STRING_STR_EXPLODE_H_

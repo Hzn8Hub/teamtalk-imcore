@@ -139,7 +139,9 @@ void IMLibCoreStartOperation(Operation* pOperation, int32_t delay /*= 0*/) {
   }
 }
 
-void IMLibCoreStartOperationWithLambda(std::function<void()> operationRun, int32_t delay /*= 0*/, std::string oper_name) {
+void IMLibCoreStartOperationWithLambda(std::function<void()> operationRun,
+                                       int32_t delay /*= 0*/,
+                                       std::string oper_name) {
   if (getOperationManager()->startOperationWithLambda(operationRun, delay, oper_name) != IMCORE_OK) {
     log_error("push operation with lambda failed");
   }

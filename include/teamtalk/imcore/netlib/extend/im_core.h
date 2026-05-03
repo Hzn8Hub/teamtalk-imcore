@@ -46,10 +46,9 @@ void IMLibCoreUnRegisterCallback(int handle);
 void IMLibCoreStartOperation(Operation* pOperation, int32_t delay = 0);
 
 // 任务队列插入Lambda
-void IMLibCoreStartOperationWithLambda(
-    std::function<void()> operationRun,
-    int32_t delay = 0,
-    std::string oper_name = "_common_operation_name");
+void IMLibCoreStartOperationWithLambda(std::function<void()> operationRun,
+                                       int32_t delay = 0,
+                                       std::string oper_name = "_common_operation_name");
 
 // 任务队列删除
 void IMLibCoreClearOperationByName(std::string oper_name);

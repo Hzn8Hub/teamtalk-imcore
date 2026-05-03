@@ -45,15 +45,15 @@ class CImConn : public teamtalk::imcore::common::CRefObject {
   int Send(void* data, int len);
   int SendPdu(CImPdu* pPdu);
 
-  virtual void OnConnect(net_handle_t handle);                        // 连接建立
-  virtual void OnClose();                                             // 连接关闭
-  virtual void OnConfirm() {}                                         // 连接确认
+  virtual void OnConnect(net_handle_t handle);  // 连接建立
+  virtual void OnClose();                       // 连接关闭
+  virtual void OnConfirm() {}                   // 连接确认
 
-  virtual void OnRead();                                              // 数据读取
-  virtual void OnWrite();                                             // 数据写入
-  
-  virtual void OnTimer(uint64_t /* curr_tick */) {}                   // 定时器事件
-  virtual void OnWriteCompelete(){};                                  // 写入完成事件
+  virtual void OnRead();   // 数据读取
+  virtual void OnWrite();  // 数据写入
+
+  virtual void OnTimer(uint64_t /* curr_tick */) {}  // 定时器事件
+  virtual void OnWriteCompelete(){};                 // 写入完成事件
 
   // 其他动作
   // bool Connect(const char* server_ip, uint16_t server_port);

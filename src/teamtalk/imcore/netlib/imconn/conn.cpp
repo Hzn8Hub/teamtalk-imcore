@@ -135,12 +135,15 @@ void CImConn::OnRead() {
     }
   } catch (CPduException& ex) {
     log_error("catch exception, sid=%u, cid=%u, err_code=%u, err_msg=%s, close the connection ",
-      ex.GetServiceId(), ex.GetCommandId(), ex.GetErrorCode(), ex.GetErrorMsg());
+              ex.GetServiceId(),
+              ex.GetCommandId(),
+              ex.GetErrorCode(),
+              ex.GetErrorMsg());
     if (pPdu) {
       delete pPdu;
       pPdu = nullptr;
     }
-    OnClose();// 关闭连接回调
+    OnClose();  // 关闭连接回调
   }
 }
 

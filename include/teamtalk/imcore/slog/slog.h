@@ -30,12 +30,12 @@
 namespace teamtalk::imcore::slog {
 
 enum class SlogLevel {
-  kDebug = 0,    // 调试级别
-  kInfo = 1,     // 信息级别
-  kWarn = 2,     // 警告级别
-  kError = 3,    // 错误级别
-  kFatal = 4,    // 严重错误级别
-  kOff = 5,      // 关闭级别
+  kDebug = 0,  // 调试级别
+  kInfo = 1,   // 信息级别
+  kWarn = 2,   // 警告级别
+  kError = 3,  // 错误级别
+  kFatal = 4,  // 严重错误级别
+  kOff = 5,    // 关闭级别
 };
 
 class Slog {
@@ -83,20 +83,20 @@ class Slog {
 #define SLOG_FILENAME (strrchr(__FILE__, '/') ? strrchr(__FILE__, '/') + 1 : __FILE__)
 #endif
 
-#define log_debug(fmt, ...)                                                               \
-  ::teamtalk::imcore::slog::Slog::Default().Write(::teamtalk::imcore::slog::SlogLevel::kDebug, \
-                                                   SLOG_FILENAME, __LINE__, __FUNCTION__, fmt, ##__VA_ARGS__)
-#define log_info(fmt, ...)                                                               \
-  ::teamtalk::imcore::slog::Slog::Default().Write(::teamtalk::imcore::slog::SlogLevel::kInfo, \
-                                                  SLOG_FILENAME, __LINE__, __FUNCTION__, fmt, ##__VA_ARGS__)
-#define log_warn(fmt, ...)                                                               \
-  ::teamtalk::imcore::slog::Slog::Default().Write(::teamtalk::imcore::slog::SlogLevel::kWarn, \
-                                                  SLOG_FILENAME, __LINE__, __FUNCTION__, fmt, ##__VA_ARGS__)
-#define log_error(fmt, ...)                                                               \
-  ::teamtalk::imcore::slog::Slog::Default().Write(::teamtalk::imcore::slog::SlogLevel::kError, \
-                                                  SLOG_FILENAME, __LINE__, __FUNCTION__, fmt, ##__VA_ARGS__)
-#define log_fatal(fmt, ...)                                                               \
-  ::teamtalk::imcore::slog::Slog::Default().Write(::teamtalk::imcore::slog::SlogLevel::kFatal, \
-                                                  SLOG_FILENAME, __LINE__, __FUNCTION__, fmt, ##__VA_ARGS__)
+#define log_debug(fmt, ...)                        \
+  ::teamtalk::imcore::slog::Slog::Default().Write( \
+    ::teamtalk::imcore::slog::SlogLevel::kDebug, SLOG_FILENAME, __LINE__, __FUNCTION__, fmt, ##__VA_ARGS__)
+#define log_info(fmt, ...)                         \
+  ::teamtalk::imcore::slog::Slog::Default().Write( \
+    ::teamtalk::imcore::slog::SlogLevel::kInfo, SLOG_FILENAME, __LINE__, __FUNCTION__, fmt, ##__VA_ARGS__)
+#define log_warn(fmt, ...)                         \
+  ::teamtalk::imcore::slog::Slog::Default().Write( \
+    ::teamtalk::imcore::slog::SlogLevel::kWarn, SLOG_FILENAME, __LINE__, __FUNCTION__, fmt, ##__VA_ARGS__)
+#define log_error(fmt, ...)                        \
+  ::teamtalk::imcore::slog::Slog::Default().Write( \
+    ::teamtalk::imcore::slog::SlogLevel::kError, SLOG_FILENAME, __LINE__, __FUNCTION__, fmt, ##__VA_ARGS__)
+#define log_fatal(fmt, ...)                        \
+  ::teamtalk::imcore::slog::Slog::Default().Write( \
+    ::teamtalk::imcore::slog::SlogLevel::kFatal, SLOG_FILENAME, __LINE__, __FUNCTION__, fmt, ##__VA_ARGS__)
 
 #endif  // TEAMTALK_IMCORE_SLOG_SLOG_H_

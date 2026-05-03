@@ -3,7 +3,7 @@
  * @email: lch2022fox@163.com
  * @time: Fri 01 May 2026 21:09:37 CST
  * @brief: 安全相关函数
-*/
+ */
 
 #ifndef TEAMTALK_IMCORE_SECURITY_SECURITY_H_
 #define TEAMTALK_IMCORE_SECURITY_SECURITY_H_
@@ -22,7 +22,6 @@ namespace teamtalk::imcore::security {
  *
  *  @return 返回 0-成功; 其他-失败
  */
-
 
 int EncryptMsg(const char* pInData, uint32_t nInLen, char** pOutData, uint32_t& nOutLen);
 
@@ -60,4 +59,4 @@ void Free(char* pOutData);
 
 }  // namespace teamtalk::imcore::security
 
-#endif // TEAMTALK_IMCORE_SECURITY_SECURITY_H_
+#endif  // TEAMTALK_IMCORE_SECURITY_SECURITY_H_

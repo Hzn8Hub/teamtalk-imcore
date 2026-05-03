@@ -144,4 +144,4 @@ class CByteStream {
 
 }  // namespace teamtalk::imcore::netlib
 
-#endif // TEAMTALK_IMCORE_NETLIB_IMPDU_SIMPLE_BUFFER_H_
+#endif  // TEAMTALK_IMCORE_NETLIB_IMPDU_SIMPLE_BUFFER_H_

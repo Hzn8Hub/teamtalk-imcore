@@ -48,4 +48,4 @@ bool netlib_is_running();
 
 }  // namespace teamtalk::imcore::netlib
 
-#endif // TEAMTALK_IMCORE_NETLIB_CORE_NETLIB_H
+#endif  // TEAMTALK_IMCORE_NETLIB_CORE_NETLIB_H
