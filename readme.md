@@ -11,6 +11,9 @@ teamtalk/.sdk/
 │   ├── include/google/protobuf/
 │   ├── lib/libprotobuf-lite.so (或 .a)
 │   └── bin/protoc
+├── jsoncpp/
+│   ├── include/json
+│   └── lib/jsoncpp.so (或 .a)
 └── spdlog/
     └── include/spdlog/
 ```

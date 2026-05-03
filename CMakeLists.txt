@@ -49,15 +49,17 @@ endif()
 ########################################################################
 # 头文件路径
 include_directories(
-    ${CMAKE_SOURCE_DIR}/include/teamtalk/imcore
+    ${CMAKE_SOURCE_DIR}/include
     ${CMAKE_SOURCE_DIR}/include/teamtalk/imcore/ttidl
     ${SDK_DIR}/protobuf/include                 # protobuf 头文件
     ${SDK_DIR}/spdlog/include                   # spdlog 头文件（如果使用）
+    ${SDK_DIR}/jsoncpp/include                  # spdlog 头文件（如果使用）
 )
 
 # 链接库路径
 link_directories(
     ${SDK_DIR}/protobuf/lib                     # protobuf 库
+    ${SDK_DIR}/jsoncpp/lib                      # jsoncpp 库
 )
 
 ########################################################################
@@ -80,6 +82,7 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin")
 # 链接依赖库
 target_link_libraries(imcore 
     protobuf-lite
+    jsoncpp
     ${PLATFORM_LIBS}
 )
 
