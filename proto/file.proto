@@ -1,7 +1,7 @@
 
 package teamtalk.imcore.ttidl.file;
 
-import "common.proto";
+import "base_define.proto";
 
 // option java_outer_classname = "TTIMMessage";
 // option java_package = "com.polaris-hzn8.protobuf";
@@ -14,7 +14,7 @@ message IMFileLoginReq {
     // cmd id:	0x0501
     required uint32 user_id = 1;
     required string task_id = 2;
-    required common.ClientFileRole file_role = 3;
+    required base_define.ClientFileRole file_role = 3;
 }
 
 message IMFileLoginRsp {
@@ -25,7 +25,7 @@ message IMFileLoginRsp {
 
 message IMFileState {
     // cmd id: 	0x0503
-    required common.ClientFileState state = 1;
+    required base_define.ClientFileState state = 1;
     required string task_id = 2;
     required uint32 user_id = 3;
 }
@@ -34,7 +34,7 @@ message IMFilePullDataReq {
     // cmd id:	0x0504
     required string task_id = 1;
     required uint32 user_id = 2;
-    required common.TransferFileType trans_mode = 3;
+    required base_define.TransferFileType trans_mode = 3;
     required uint32 offset = 4;
     required uint32 data_size = 5;
 }
@@ -54,7 +54,7 @@ message IMFileReq {
     required uint32 to_user_id = 2;
     required string file_name = 3;
     required uint32 file_size = 4;
-    required common.TransferFileType trans_mode = 5;
+    required base_define.TransferFileType trans_mode = 5;
 }
 
 message IMFileRsp {
@@ -64,8 +64,8 @@ message IMFileRsp {
     required uint32 to_user_id = 3;
     required string file_name = 4;
     required string task_id = 5;
-    repeated common.IpAddr ip_addr_list = 6;
-    required common.TransferFileType trans_mode = 7;
+    repeated base_define.IpAddr ip_addr_list = 6;
+    required base_define.TransferFileType trans_mode = 7;
 }
 
 message IMFileNotify {
@@ -75,8 +75,8 @@ message IMFileNotify {
     required string file_name = 3;
     required uint32 file_size = 4;
     required string task_id = 5;
-    repeated common.IpAddr ip_addr_list = 6;
-    required common.TransferFileType trans_mode = 7;
+    repeated base_define.IpAddr ip_addr_list = 6;
+    required base_define.TransferFileType trans_mode = 7;
     required uint32 offline_ready = 8;  // 1:True 0:False
 }
 
@@ -89,8 +89,8 @@ message IMFileHasOfflineReq {
 message IMFileHasOfflineRsp {
     // cmd id:	0x050a
     required uint32 user_id = 1;
-    repeated common.OfflineFileInfo offline_file_list = 2;
-    repeated common.IpAddr ip_addr_list = 3;
+    repeated base_define.OfflineFileInfo offline_file_list = 2;
+    repeated base_define.IpAddr ip_addr_list = 3;
     optional bytes attach_data = 20;
 }
 
