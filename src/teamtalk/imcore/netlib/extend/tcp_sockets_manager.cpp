@@ -6,10 +6,10 @@
  brief:
 */
 
-#include <global_define.h>
-#include <imcore/extra/tcp_sockets_manager.h>
+#include <teamtalk/imcore/netlib/ostype.h>
+#include <teamtalk/imcore/netlib/extend/tcp_sockets_manager.h>
 
-namespace imcore {
+namespace teamtalk::imcore::netlib {
 
 TcpSocketsManager::TcpSocketsManager() {}
 
@@ -59,4 +59,4 @@ void TcpSocketsManager::release_by_handle(net_handle_t handle) {
     m_client_conn_map.erase(handle);
 }
 
-}  // namespace imcore
+}  // namespace teamtalk::imcore::netlib

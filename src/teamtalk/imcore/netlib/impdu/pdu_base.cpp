@@ -6,16 +6,16 @@
  brief:
 */
 
-#include "im_pdu_base.h"
-#include "IM.BaseDefine.pb.h"
-#include "crosslog.h"
-#include "util.h"
-using namespace IM::BaseDefine;
+#include <teamtalk/imcore/slog/slog.h>
+#include <teamtalk/imcore/netlib/impdu/pdu_base.h>
+#include <teamtalk/imcore/netlib/utils/basic_tools.h>
+
+namespace teamtalk::imcore::netlib {
 
 CImPdu::CImPdu() {
   m_pdu_header.version = IM_PDU_VERSION;
   m_pdu_header.flag = 0;
-  m_pdu_header.service_id = SID_OTHER;
+  m_pdu_header.service_id = IM_PDU_DEFAULT_SERVICE_ID;
   m_pdu_header.command_id = 0;
   m_pdu_header.seq_num = 0;
   m_pdu_header.reversed = 0;
@@ -157,3 +157,5 @@ bool CImPdu::SetPBMsg(const google::protobuf::MessageLite* msg) {
   WriteHeader();
   return true;
 }
+
+}  // namespace teamtalk::imcore::netlib

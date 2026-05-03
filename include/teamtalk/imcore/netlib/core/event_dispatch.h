@@ -10,15 +10,22 @@
  exist（应用单例模式）
 */
 
-#ifndef __EVENT_DISPATCH_H__
-#define __EVENT_DISPATCH_H__
+#ifndef TEAMTALK_IMCORE_NETLIB_CORE_EVENT_DISPATCH_H
+#define TEAMTALK_IMCORE_NETLIB_CORE_EVENT_DISPATCH_H
 
 #include <list>
 #include <mutex>
-#include "ostype.h"
-#include "util.h"
+#include <teamtalk/imcore/netlib/ostype.h>
+#include <teamtalk/imcore/netlib/utils/basic_tools.h>
 
-enum { SOCKET_READ = 0x1, SOCKET_WRITE = 0x2, SOCKET_EXCEP = 0x4, SOCKET_ALL = 0x7 };
+namespace teamtalk::imcore::netlib {
+
+enum {
+  SOCKET_READ = 0x1,          // 读事件
+  SOCKET_WRITE = 0x2,         // 写事件
+  SOCKET_EXCEP = 0x4,         // 异常事件
+  SOCKET_ALL = 0x7            // 所有事件
+};
 
 // 套接字事件处理分发
 class CEventDispatch {
@@ -43,31 +50,32 @@ class CEventDispatch {
   CEventDispatch();
 
  private:
+  typedef struct {
+    callback_t callback;                   // 回调函数
+    void* user_data;                       // 用户数据
+    uint64_t interval;                     // 间隔时间
+    uint64_t next_tick;                    // 下次执行时间
+  } TimerItem;
+
   void _CheckTimer();
   void _CheckLoop();
 
-  typedef struct {
-    callback_t callback;
-    void* user_data;
-    uint64_t interval;
-    uint64_t next_tick;
-  } TimerItem;
+ std::mutex m_lock;                         // 互斥锁
+ std::list<TimerItem*> m_timer_list;        // 定时器列表
+ std::list<TimerItem*> m_loop_list;         // 循环列表
 
- private:
 #ifdef _WIN32
-  fd_set m_read_set;
-  fd_set m_write_set;
-  fd_set m_excep_set;
+  fd_set m_read_set;                         // 读事件集合
+  fd_set m_write_set;                        // 写事件集合
+  fd_set m_excep_set;                        // 异常事件集合
 #elif __APPLE__
-  int m_kqfd;
+  int m_kqfd;                                // 事件驱动文件描述符
 #else
-  int m_epfd;
+  int m_epfd;                                // 事件驱动文件描述符
 #endif
-  std::mutex m_lock;
-  std::list<TimerItem*> m_timer_list;
-  std::list<TimerItem*> m_loop_list;
-
-  bool running;
+  bool running;                              // 是否运行中
 };
 
-#endif
+}  // namespace teamtalk::imcore::netlib
+
+#endif // TEAMTALK_IMCORE_NETLIB_CORE_EVENT_DISPATCH_H

@@ -6,10 +6,11 @@
  brief: 事件调度器 处理事件的调度与触发
 */
 
-#include "event_dispatch.h"
-#include "base_socket.h"
-#include "crosslog.h"
-using namespace std;
+#include <teamtalk/imcore/slog/slog.h>
+#include <teamtalk/imcore/netlib/core/base_socket.h>
+#include <teamtalk/imcore/netlib/core/event_dispatch.h>
+
+namespace teamtalk::imcore::netlib {
 
 #define MIN_TIMER_DURATION 100  // 100 miliseconds
 
@@ -86,8 +87,7 @@ void CEventDispatch::_CheckTimer() {
   list<TimerItem*>::iterator it;
   for (it = m_timer_list.begin(); it != m_timer_list.end();) {
     TimerItem* pItem = *it;
-    it++;  // iterator maybe deleted in the callback, so we should increment it
-           // before callback
+    it++;  // 迭代器可能被回调函数删除，所以应该在回调函数之前递增
     if (curr_tick >= pItem->next_tick) {
       pItem->next_tick += pItem->interval;
       pItem->callback(pItem->user_data, NETLIB_MSG_TIMER, 0, NULL);
@@ -352,3 +352,5 @@ void CEventDispatch::StopDispatch() {
 }
 
 #endif
+
+}  // namespace teamtalk::imcore::netlib

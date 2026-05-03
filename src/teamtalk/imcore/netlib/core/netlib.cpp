@@ -8,9 +8,13 @@
     对外提供了调用的api ，它封装了CEventDispatch
 */
 
-#include "netlib.h"
-#include "base_socket.h"
-#include "event_dispatch.h"
+#include <string>
+#include <teamtalk/imcore/slog/slog.h>
+#include <teamtalk/imcore/netlib/core/netlib.h>
+#include <teamtalk/imcore/netlib/core/base_socket.h>
+#include <teamtalk/imcore/netlib/core/event_dispatch.h>
+
+namespace teamtalk::imcore::netlib {
 
 int netlib_init() {
   int ret = NETLIB_OK;
@@ -47,20 +51,24 @@ int netlib_listen(const char* server_ip, uint16_t port, callback_t callback, voi
 
 net_handle_t netlib_connect(const char* server_ip, uint16_t port, callback_t callback, void* callback_data) {
   CBaseSocket* pSocket = new CBaseSocket();
-  if (!pSocket)
+  if (!pSocket) {
     return NETLIB_INVALID_HANDLE;
+  }
 
   net_handle_t handle = pSocket->Connect(server_ip, port, callback, callback_data);
-  if (handle == NETLIB_INVALID_HANDLE)
+  if (handle == NETLIB_INVALID_HANDLE) {
     delete pSocket;
+    return NETLIB_INVALID_HANDLE;
+  }
 
   return handle;
 }
 
 int netlib_send(net_handle_t handle, void* buf, int len) {
   CBaseSocket* pSocket = FindBaseSocket(handle);
-  if (!pSocket)
+  if (!pSocket) {
     return NETLIB_ERROR;
+  }
 
   int ret = pSocket->Send(buf, len);
   pSocket->ReleaseRef();
@@ -69,8 +77,9 @@ int netlib_send(net_handle_t handle, void* buf, int len) {
 
 int netlib_recv(net_handle_t handle, void* buf, int len) {
   CBaseSocket* pSocket = FindBaseSocket(handle);
-  if (!pSocket)
+  if (!pSocket) {
     return NETLIB_ERROR;
+  }
 
   int ret = pSocket->Recv(buf, len);
   pSocket->ReleaseRef();
@@ -79,8 +88,9 @@ int netlib_recv(net_handle_t handle, void* buf, int len) {
 
 int netlib_close(net_handle_t handle) {
   CBaseSocket* pSocket = FindBaseSocket(handle);
-  if (!pSocket)
+  if (!pSocket) {
     return NETLIB_ERROR;
+  }
 
   int ret = pSocket->Close();
   pSocket->ReleaseRef();
@@ -89,11 +99,13 @@ int netlib_close(net_handle_t handle) {
 
 int netlib_option(net_handle_t handle, int opt, void* value) {
   CBaseSocket* pSocket = FindBaseSocket(handle);
-  if (!pSocket)
+  if (!pSocket) {
     return NETLIB_ERROR;
+  }
 
-  if ((opt >= NETLIB_OPT_GET_REMOTE_IP) && !value)
+  if ((opt >= NETLIB_OPT_GET_REMOTE_IP) && !value) {
     return NETLIB_ERROR;
+  }
 
   switch (opt) {
     case NETLIB_OPT_SET_CALLBACK:
@@ -152,3 +164,5 @@ void netlib_stop_event() {
 bool netlib_is_running() {
   return CEventDispatch::Instance()->isRunning();
 }
+
+}  // namespace teamtalk::imcore::netlib

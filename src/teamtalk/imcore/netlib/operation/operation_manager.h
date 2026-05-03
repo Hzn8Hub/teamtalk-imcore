@@ -7,8 +7,8 @@
         用于管理和调度异步任务 执行延时或实时任务
 */
 
-#ifndef OPERATIONMANAGER_7EEF3272_2557_4A76_9C25_67D4639F40DB_H__
-#define OPERATIONMANAGER_7EEF3272_2557_4A76_9C25_67D4639F40DB_H__
+#ifndef TEAMTALK_IMCORE_NETLIB_OPERATION_OPERATION_MANAGER_H_
+#define TEAMTALK_IMCORE_NETLIB_OPERATION_OPERATION_MANAGER_H_
 
 #include <list>
 #include <mutex>
@@ -17,9 +17,9 @@
 #include <atomic>
 #include <functional>
 #include <condition_variable>
-#include <imcore/operation/error_code.h>
+#include <teamtalk/imcore/netlib/operation/error_code.h>
 
-namespace imcore {
+namespace teamtalk::imcore::netlib {
 
 /**
  * @brief OperationManager 异步任务管理器
@@ -62,6 +62,6 @@ class OperationManager {
 
 OperationManager* getOperationManager();
 
-}  // namespace imcore
+}  // namespace teamtalk::imcore::netlib
 
-#endif  // OPERATIONMANAGER_7EEF3272_2557_4A76_9C25_67D4639F40DB_H__
+#endif  // TEAMTALK_IMCORE_NETLIB_OPERATION_OPERATION_MANAGER_H_

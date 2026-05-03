@@ -6,15 +6,20 @@
  brief: 通信协议数据包定于与解析
 */
 
-#ifndef _IMPDUBASE_H_
-#define _IMPDUBASE_H_
+#ifndef TEAMTALK_IMCORE_NETLIB_IMPDU_IM_PDU_BASE_H_
+#define TEAMTALK_IMCORE_NETLIB_IMPDU_IM_PDU_BASE_H_
 
-#include "google/protobuf/message_lite.h"
-#include "ostype.h"
-#include "simple_buffer.h"
+#include <google/protobuf/message_lite.h>
+#include <teamtalk/imcore/netlib/ostype.h>
+#include <teamtalk/imcore/netlib/impdu/simple_buffer.h>
+
+namespace teamtalk::imcore::netlib {
 
 #define IM_PDU_HEADER_LEN 16
 #define IM_PDU_VERSION 1
+
+// PDU 默认 service_id
+#define IM_PDU_DEFAULT_SERVICE_ID 0x0007
 
 // 判空检查
 #define ALLOC_FAIL_ASSERT(p) \
@@ -83,4 +88,6 @@ class CImPdu {
   PduHeader_t m_pdu_header;  // 消息头
 };
 
-#endif  // _IMPDUBASE_H_
+}  // namespace teamtalk::imcore::netlib
+
+#endif  // TEAMTALK_IMCORE_NETLIB_IMPDU_IM_PDU_BASE_H_

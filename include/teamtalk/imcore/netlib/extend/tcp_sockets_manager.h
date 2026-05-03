@@ -5,12 +5,12 @@
  brief:
 */
 
-#ifndef _TCP_SOCKETS_MANAGER_
-#define _TCP_SOCKETS_MANAGER_
+#ifndef TEAMTALK_IMCORE_NETLIB_EXTEND_TCP_SOCKETS_MANAGER_H_
+#define TEAMTALK_IMCORE_NETLIB_EXTEND_TCP_SOCKETS_MANAGER_H_
 
-#include <imcore\imconn\im_conn.h>
+#include <teamtalk/imcore/imconn/im_conn.h>
 
-namespace imcore {
+namespace teamtalk::imcore::netlib {
 
 class TcpSocketsManager {
  public:
@@ -31,6 +31,6 @@ class TcpSocketsManager {
   ConnMap_t m_client_conn_map;
 };
 
-}  // namespace imcore
+}  // namespace teamtalk::imcore::netlib
 
-#endif  // _TCP_SOCKETS_MANAGER_
+#endif  // TEAMTALK_IMCORE_NETLIB_EXTEND_TCP_SOCKETS_MANAGER_H_

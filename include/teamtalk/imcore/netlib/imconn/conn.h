@@ -6,16 +6,18 @@
  brief:
 */
 
-#ifndef _IMCONN_H_
-#define _IMCONN_H_
+#ifndef TEAMTALK_IMCORE_NETLIB_IMCONN_CONN_H_
+#define TEAMTALK_IMCORE_NETLIB_IMCONN_CONN_H_
 
 #include <string>
 #include <unordered_map>
-#include "im_pdu_base.h"
-#include "netlib.h"
-#include "ostype.h"
-#include "ref_object.h"
-#include "utility.h"
+#include <teamtalk/imcore/netlib/ostype.h>
+#include <teamtalk/imcore/netlib/core/netlib.h>
+#include <teamtalk/imcore/netlib/impdu/pdu_base.h>
+#include <teamtalk/imcore/utils/basic_tools.h>
+#include <teamtalk/imcore/common/ref_object.h>
+
+namespace teamtalk::imcore::netlib {
 
 #define SERVER_HEARTBEAT_INTERVAL 5000
 #define SERVER_TIMEOUT 30000
@@ -80,4 +82,6 @@ typedef std::unordered_map<uint32_t, CImConn*> UserMap_t;
 // CImConn对象根据不同消息类型 分发事件处理
 void imconn_callback(void* callback_data, uint8_t msg, uint32_t handle, void* pParam);
 
-#endif  // _IMCONN_H_
+}  // namespace teamtalk::imcore::netlib
+
+#endif  // TEAMTALK_IMCORE_NETLIB_IMCONN_CONN_H_

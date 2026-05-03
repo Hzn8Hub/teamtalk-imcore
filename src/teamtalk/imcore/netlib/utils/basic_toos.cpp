@@ -7,7 +7,9 @@
 */
 
 #include <sstream>
-#include "basic_tools.h"
+#include <teamtalk/imcore/netlib/utils/basic_tools.h>
+
+namespace teamtalk::imcore::netlib {
 
 uint64_t get_tick_count() {
 #ifdef _MSC_VER
@@ -183,3 +185,5 @@ char* replaceStr(char* pSrc, char oldChar, char newChar) {
   }
   return pSrc;
 }
+
+}  // namespace teamtalk::imcore::netlib

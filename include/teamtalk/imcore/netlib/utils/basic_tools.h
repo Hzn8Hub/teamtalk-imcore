@@ -6,24 +6,26 @@
  brief: 各种工具类封装
 */
 
-#ifndef __UTIL_H__
-#define __UTIL_H__
+#ifndef TEAMTALK_IMCORE_NETLIB_UTILS_BASIC_TOOLS_H_
+#define TEAMTALK_IMCORE_NETLIB_UTILS_BASIC_TOOLS_H_
 
+#include <string>
+#include <stdio.h>
 #include <assert.h>
 #include <stdint.h>
-#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <string>
 
 #ifdef _MSC_VER
 #include <windows.h>
 #else
-#include <pthread.h>
-#include <sys/time.h>
 #include <time.h>
 #include <unistd.h>
+#include <pthread.h>
+#include <sys/time.h>
 #endif
+
+namespace teamtalk::imcore::netlib {
 
 /// @brief 获取单调递增的时间戳（毫秒）
 /// @return 自系统启动或高精度计时器起计的毫秒数；Windows 上优先使用 QueryPerformanceCounter
@@ -91,4 +93,6 @@ void replace_mark(std::string& str, uint32_t new_value, uint32_t& begin_pos);
 /// @return pSrc；若 pSrc 为 nullptr 则返回 nullptr
 char* replaceStr(char* pSrc, char oldChar, char newChar);
 
-#endif
+}  // namespace teamtalk::imcore::netlib
+
+#endif  // TEAMTALK_IMCORE_NETLIB_UTILS_BASIC_TOOLS_H_

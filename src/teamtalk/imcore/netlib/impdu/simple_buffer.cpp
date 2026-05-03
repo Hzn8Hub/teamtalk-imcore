@@ -10,10 +10,12 @@
     3.然后通过send将流式数据发送出去
 */
 
-#include "simple_buffer.h"
 #include <stdlib.h>
 #include <string.h>
 #include <algorithm>
+#include <teamtalk/imcore/netlib/impdu/simple_buffer.h>
+
+namespace teamtalk::imcore::netlib {
 
 ///////////// CSimpleBuffer ////////////////
 CSimpleBuffer::CSimpleBuffer() {
@@ -326,3 +328,5 @@ void CByteStream::_WriteByte(void* buf, uint32_t len) {
   }
   m_pos += len;
 }
+
+}  // namespace teamtalk::imcore::netlib

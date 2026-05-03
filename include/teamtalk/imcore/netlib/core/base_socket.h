@@ -5,27 +5,29 @@
  Update Time: Wed 14 Jun 2023 11:25:30 CST
  brief:
         非阻塞套接字包装类/支持跨平台 CBaseSocket
-        a wrap for non-block socket class for Windows, LINUX and MacOS X
- platform 1.封装了套接字的基本操作，使网络编程更方便
+        a wrap for non-block socket class for Windows, LINUX and MacOS X platform 
+         1.封装了套接字的基本操作，使网络编程更方便
          2.支持监听和接受连接请求，可以用于创建服务器端套接字
          3.支持发起连接到远程服务器，可以用于创建客户端套接字
          4.提供发送和接收数据的方法，可用于在网络上进行数据的传输
          5.处理套接字的事件，例如可读事件、可写事件和关闭事件，通过回调函数的方式进行处理
 */
 
-#ifndef __SOCKET_H__
-#define __SOCKET_H__
+#ifndef TEAMTALK_IMCORE_NETLIB_CORE_BASE_SOCKET_H
+#define TEAMTALK_IMCORE_NETLIB_CORE_BASE_SOCKET_H
 
-#include "ostype.h"
-#include "ref_object.h"
-#include "util.h"
+#include <teamtalk/imcore/common/ref_object.h>
+#include <teamtalk/imcore/netlib/ostype.h>
+#include <teamtalk/imcore/netlib/utils/basic_tools.h>
+
+namespace teamtalk::imcore::netlib {
 
 enum {
-  SOCKET_STATE_IDLE,
-  SOCKET_STATE_LISTENING,
-  SOCKET_STATE_CONNECTING,
-  SOCKET_STATE_CONNECTED,
-  SOCKET_STATE_CLOSING
+  SOCKET_STATE_IDLE,          // 空闲状态
+  SOCKET_STATE_LISTENING,     // 监听状态
+  SOCKET_STATE_CONNECTING,    // 连接中状态
+  SOCKET_STATE_CONNECTED,     // 连接成功状态
+  SOCKET_STATE_CLOSING,       // 关闭状态
 };
 
 class CBaseSocket : public CRefObject {
@@ -90,4 +92,6 @@ class CBaseSocket : public CRefObject {
 
 CBaseSocket* FindBaseSocket(net_handle_t fd);
 
-#endif
+}  // namespace teamtalk::imcore::netlib
+
+#endif // TEAMTALK_IMCORE_NETLIB_CORE_BASE_SOCKET_H

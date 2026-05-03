@@ -6,20 +6,20 @@
   brief: 异步操作执行单位
 */
 
-#ifndef IOPERATION123_D8CF1B19_B95A_4A75_82FB_7572A1BB9A30_H__
-#define IOPERATION123_D8CF1B19_B95A_4A75_82FB_7572A1BB9A30_H__
+#ifndef TEAMTALK_IMCORE_NETLIB_OPERATION_IOPERATION_H_
+#define TEAMTALK_IMCORE_NETLIB_OPERATION_IOPERATION_H_
 
 #include <memory>
-#include <imcore/ostype.h>
+#include <teamtalk/imcore/netlib/ostype.h>
 
-namespace imcore {
+namespace teamtalk::imcore::netlib {
 
-struct NETWORK_DLL IOperation {
+struct IOperation {
  public:
   virtual void process() = 0;
   virtual void release() = 0;
 };
 
-}  // namespace imcore
+}  // namespace teamtalk::imcore::netlib
 
-#endif  // IOPERATION123_D8CF1B19_B95A_4A75_82FB_7572A1BB9A30_H__
+#endif  // TEAMTALK_IMCORE_NETLIB_OPERATION_IOPERATION_H_

@@ -8,12 +8,13 @@
         主要用于处理TCP长连接
 */
 
-#ifndef __NETLIB_H__
-#define __NETLIB_H__
+#ifndef TEAMTALK_IMCORE_NETLIB_CORE_NETLIB_H
+#define TEAMTALK_IMCORE_NETLIB_CORE_NETLIB_H
 
-#include "ostype.h"
+#include <teamtalk/imcore/netlib/ostype.h>
 
-// 网络库相关操作
+namespace teamtalk::imcore::netlib {
+
 #define NETLIB_OPT_SET_CALLBACK 1
 #define NETLIB_OPT_SET_CALLBACK_DATA 2
 #define NETLIB_OPT_GET_REMOTE_IP 3
@@ -24,10 +25,6 @@
 #define NETLIB_OPT_SET_RECV_BUF_SIZE 8
 
 #define NETLIB_MAX_SOCKET_BUF_SIZE (128 * 1024)
-
-#ifdef __cplusplus
-extern "C" {
-#endif
 
 int netlib_init();
 int netlib_destroy();
@@ -49,8 +46,6 @@ void netlib_stop_event();
 
 bool netlib_is_running();
 
-#ifdef __cplusplus
-}
-#endif
+}  // namespace teamtalk::imcore::netlib
 
-#endif
+#endif // TEAMTALK_IMCORE_NETLIB_CORE_NETLIB_H

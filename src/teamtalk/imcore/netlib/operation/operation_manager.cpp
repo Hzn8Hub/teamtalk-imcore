@@ -10,7 +10,7 @@
 #include <imcore/operation/operation.h>
 #include <imcore/operation/operation_manager.h>
 
-namespace imcore {
+namespace teamtalk::imcore::netlib {
 
 namespace {
 class LambdaOperation : public Operation {
@@ -18,7 +18,6 @@ class LambdaOperation : public Operation {
   LambdaOperation(std::function<void()> operationRun) : m_operationRun(operationRun) {}
   virtual void processOpertion() { m_operationRun(); }
   virtual void release() { delete this; }
-
  private:
   std::function<void()> m_operationRun;
 };
@@ -139,9 +138,10 @@ IMCoreErrorCode OperationManager::startOperation(IN Operation* pOperation, Int32
   return IMCORE_OK;
 }
 
-IMCoreErrorCode OperationManager::startOperationWithLambda(std::function<void()> operationRun,
-                                                           Int32 delay,
-                                                           std::string oper_name) {
+IMCoreErrorCode OperationManager::startOperationWithLambda(
+  std::function<void()> operationRun,
+  int32_t delay,
+  std::string oper_name) {
   LambdaOperation* pLambdaOper = new LambdaOperation(operationRun);
   pLambdaOper->setName(oper_name);
   return startOperation(pLambdaOper, delay);
@@ -170,4 +170,4 @@ OperationManager* getOperationManager() {
   return &manager;
 }
 
-}  // namespace imcore
+}  // namespace teamtalk::imcore::netlib

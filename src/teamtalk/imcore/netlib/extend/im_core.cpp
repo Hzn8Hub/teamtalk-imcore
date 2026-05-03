@@ -8,14 +8,12 @@
 
 #include <mutex>
 #include <process.h>
-#include <imcore/base/netlib.h>
-#include <imcore/extra/im_core.h>
-#include <imcore/extra/tcp_sockets_manager.h>
-#include <imcore/operation/operation_manager.h>
+#include <teamtalk/imcore/netlib/core/netlib.h>
+#include <teamtalk/imcore/netlib/extend/im_core.h>
+#include <teamtalk/imcore/netlib/extend/tcp_sockets_manager.h>
+#include <teamtalk/imcore/netlib/operation/operation_manager.h>
 
-using namespace std;
-
-namespace imcore {
+namespace teamtalk::imcore::netlib {
 
 static std::mutex g_lock;
 
@@ -153,4 +151,4 @@ void IMLibCoreClearOperationByName(std::string oper_name) {
   }
 }
 
-}  // namespace imcore
+}  // namespace teamtalk::imcore::netlib

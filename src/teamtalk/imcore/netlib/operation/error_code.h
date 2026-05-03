@@ -6,12 +6,12 @@
  brief: IMCORE本地错误码的定义,通信协议的错误码定义在PortErrorCode.h
 */
 
-#ifndef ERRORCODE_4A19179B_20B8_4BF7_AD9A_2468C3BF9AB7_H__
-#define ERRORCODE_4A19179B_20B8_4BF7_AD9A_2468C3BF9AB7_H__
+#ifndef TEAMTALK_IMCORE_NETLIB_OPERATION_ERROR_CODE_H_
+#define TEAMTALK_IMCORE_NETLIB_OPERATION_ERROR_CODE_H_
 
-namespace imcore {
+namespace teamtalk::imcore::netlib {
 
-typedef UInt32 IMCoreErrorCode;
+typedef uint32_t IMCoreErrorCode;
 
 // 错误掩码，error code flag
 const IMCoreErrorCode IMCORE_FLAG = 0x000000U;       // 此码代表常规错误
@@ -33,6 +33,6 @@ const IMCoreErrorCode IMCORE_WORK_PUSHOPERTION_ERROR = IMCORE_WORK_FLAG | 0x02; 
 const IMCoreErrorCode IMCORE_WORK_POSTMESSAGE_ERROR = IMCORE_WORK_FLAG | 0x03;        //
 const IMCoreErrorCode IMCORE_WORK_TIMER_INEXISTENCE_ERROR = IMCORE_WORK_FLAG | 0x04;  // Timer不存在
 
-}  // namespace imcore
+}  // namespace teamtalk::imcore::netlib
 
-#endif  // ERRORCODE_4A19179B_20B8_4BF7_AD9A_2468C3BF9AB7_H__
+#endif  // TEAMTALK_IMCORE_NETLIB_OPERATION_ERROR_CODE_H_

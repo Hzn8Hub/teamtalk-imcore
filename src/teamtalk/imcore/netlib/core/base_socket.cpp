@@ -13,19 +13,21 @@
          5.处理套接字的事件，例如可读事件、可写事件和关闭事件，通过回调函数的方式进行处理
 */
 
-#include "base_socket.h"
 #include <unordered_map>
-#include "crosslog.h"
-#include "event_dispatch.h"
-using namespace std;
+#include <teamtalk/imcore/slog/slog.h>
+#include <teamtalk/imcore/netlib/core/base_socket.h>
+#include <teamtalk/imcore/netlib/core/event_dispatch.h>
+
+namespace teamtalk::imcore::netlib {
 
 // key - socketfd
 // value - CBaseSocket
-typedef unordered_map<net_handle_t, CBaseSocket*> SocketMap;
+typedef std::unordered_map<net_handle_t, CBaseSocket*> SocketMap;
+// 套接字映射表
 SocketMap g_socket_map;
 
 void AddBaseSocket(CBaseSocket* pSocket) {
-  g_socket_map.insert(make_pair((net_handle_t)pSocket->GetSocket(), pSocket));
+  g_socket_map.insert(std::make_pair((net_handle_t)pSocket->GetSocket(), pSocket));
 }
 
 void RemoveBaseSocket(CBaseSocket* pSocket) {
@@ -33,11 +35,11 @@ void RemoveBaseSocket(CBaseSocket* pSocket) {
 }
 
 CBaseSocket* FindBaseSocket(net_handle_t fd) {
-  CBaseSocket* pSocket = NULL;
-  SocketMap::iterator iter = g_socket_map.find(fd);
+  SocketMap::const_iterator iter = g_socket_map.find(fd);
   if (iter != g_socket_map.end()) {
-    pSocket = iter->second;
+    CBaseSocket* pSocket = iter->second;
     pSocket->AddRef();
+    return pSocket;
   }
   return pSocket;
 }
@@ -67,10 +69,10 @@ void CBaseSocket::SetSendBufSize(uint32_t send_size) {
   if (ret == SOCKET_ERROR)
     log_error("set SO_SNDBUF failed for fd=%d", m_socket);
 
+  // 获取发送缓冲区大小
   int size = 0;
   socklen_t len = 4;
-  getsockopt(m_socket, SOL_SOCKET, SO_SNDBUF, SOCKOPT_PTR(&size),
-             &len);  // 获取发送缓冲区大小
+  getsockopt(m_socket, SOL_SOCKET, SO_SNDBUF, SOCKOPT_PTR(&size), &len);
 
   log_debug("socket=%d send_buf_size=%d", m_socket, size);
 }
@@ -78,13 +80,14 @@ void CBaseSocket::SetSendBufSize(uint32_t send_size) {
 void CBaseSocket::SetRecvBufSize(uint32_t recv_size) {
   // 设置接收缓冲区大小
   int ret = setsockopt(m_socket, SOL_SOCKET, SO_RCVBUF, SOCKOPT_CAST(&recv_size), 4);
-  if (ret == SOCKET_ERROR)
+  if (ret == SOCKET_ERROR) {
     log_error("set SO_RCVBUF failed for fd=%d", m_socket);
+  }
 
+  // 获取接收缓冲区大小
   int size = 0;
   socklen_t len = 4;
-  getsockopt(m_socket, SOL_SOCKET, SO_RCVBUF, SOCKOPT_PTR(&size),
-             &len);  // 获取接收缓冲区大小
+  getsockopt(m_socket, SOL_SOCKET, SO_RCVBUF, SOCKOPT_PTR(&size), &len);
 
   log_debug("socket=%d recv_buf_size=%d", m_socket, size);
 }
@@ -118,8 +121,6 @@ int CBaseSocket::Listen(const char* server_ip, uint16_t port, callback_t callbac
   int ret = bind(m_socket, (sockaddr*)&serv_addr, sizeof(serv_addr));
   if (ret == SOCKET_ERROR) {
     log_error("bind failed, err_code=%d, server_ip=%s, port=%u", _GetErrorCode(), server_ip, port);
-    // log_error("bind failed, server_ip=%s, port=%u, err_code=%d, err_msg=%s",
-    //     server_ip, port, errno, strerror(errno));
     closesocket(m_socket);
     return NETLIB_ERROR;
   }
@@ -381,3 +382,5 @@ void CBaseSocket::_AcceptNewSocket() {
     m_callback(m_callback_data, NETLIB_MSG_CONNECT, (net_handle_t)fd, NULL);
   }
 }
+
+}  // namespace teamtalk::imcore::netlib

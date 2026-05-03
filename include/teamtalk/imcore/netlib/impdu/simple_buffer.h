@@ -8,14 +8,16 @@
         2.让原本结构化的数据(字符串、整数、结构体)可以按字节流进行传输、存储或解析
 */
 
-#ifndef UTILPDU_H_
-#define UTILPDU_H_
+#ifndef TEAMTALK_IMCORE_NETLIB_IMPDU_SIMPLE_BUFFER_H_
+#define TEAMTALK_IMCORE_NETLIB_IMPDU_SIMPLE_BUFFER_H_
 
-#include <list>
 #include <map>
 #include <set>
+#include <list>
 #include <string>
-#include "ostype.h"
+#include <teamtalk/imcore/netlib/ostype.h>
+
+namespace teamtalk::imcore::netlib {
 
 // exception code
 #define ERROR_CODE_PARSE_FAILED 1
@@ -140,4 +142,6 @@ class CByteStream {
   uint32_t m_pos;             //读写位置
 };
 
-#endif
+}  // namespace teamtalk::imcore::netlib
+
+#endif // TEAMTALK_IMCORE_NETLIB_IMPDU_SIMPLE_BUFFER_H_

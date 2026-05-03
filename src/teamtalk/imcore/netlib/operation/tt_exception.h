@@ -6,24 +6,22 @@
  brief: 逻辑引擎异常
 */
 
-#ifndef EXCEPTION_7889B422_4F2F_495F_AFAC_180F657486D2_H__
-#define EXCEPTION_7889B422_4F2F_495F_AFAC_180F657486D2_H__
+#ifndef TEAMTALK_IMCORE_NETLIB_OPERATION_TT_EXCEPTION_H_
+#define TEAMTALK_IMCORE_NETLIB_OPERATION_TT_EXCEPTION_H_
 
 #include <string>
-#include <ostype.h>
+#include <teamtalk/imcore/netlib/ostype.h>
 
-namespace imcore {
+namespace teamtalk::imcore::netlib {
 
-#pragma warning(disable : 4251)
-struct NETWORK_DLL Exception : public std::exception {
+struct Exception : public std::exception {
  public:
-  Exception(int errorCode, const std::string& msg) : m_ErrorCode(errorCode), m_msg(msg) {}
-
+  Exception(int32_t errorCode, const std::string& msg) : m_ErrorCode(errorCode), m_msg(msg) {}
  public:
-  int m_ErrorCode;
-  std::string m_msg;
+  int32_t m_ErrorCode;
+  std::string m_Message;
 };
 
-}  // namespace imcore
+}  // namespace teamtalk::imcore::netlib
 
-#endif  // EXCEPTION_7889B422_4F2F_495F_AFAC_180F657486D2_H__
+#endif  // TEAMTALK_IMCORE_NETLIB_OPERATION_TT_EXCEPTION_H_

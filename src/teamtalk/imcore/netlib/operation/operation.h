@@ -6,15 +6,15 @@
  brief: 封装的操作对象operation
 */
 
-#ifndef OPERATION_D8F2BC78_108D_4219_9D6E_F1728D1B8C95_H__
-#define OPERATION_D8F2BC78_108D_4219_9D6E_F1728D1B8C95_H__
+#ifndef TEAMTALK_IMCORE_NETLIB_OPERATION_OPERATION_H_
+#define TEAMTALK_IMCORE_NETLIB_OPERATION_OPERATION_H_
 
-#include <imcore/ostype.h>
-#include <imcore/operation/ioperation.h>
+#include <teamtalk/imcore/netlib/ostype.h>
+#include <teamtalk/imcore/netlib/operation/ioperation.h>
 
-namespace imcore {
+namespace teamtalk::imcore::netlib {
 
-class NETWORK_DLL Operation : public IOperation {
+class Operation : public IOperation {
   enum OperationState {
     OPERATION_IDLE = 0,
     OPERATION_STARTING,
@@ -43,6 +43,6 @@ class NETWORK_DLL Operation : public IOperation {
   OperationState m_optState;
 };
 
-}  // namespace imcore
+}  // namespace teamtalk::imcore::netlib
 
-#endif  // OPERATION_D8F2BC78_108D_4219_9D6E_F1728D1B8C95_H__
+#endif  // TEAMTALK_IMCORE_NETLIB_OPERATION_OPERATION_H_

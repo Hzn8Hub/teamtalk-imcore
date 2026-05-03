@@ -6,9 +6,10 @@
  brief:
 */
 
-#include "im_conn.h"
-#include "crosslog.h"
-#include "public_define.h"
+#include <teamtalk/imcore/slog/slog.h>
+#include <teamtalk/imcore/netlib/imconn/conn.h>
+
+namespace teamtalk::imcore::netlib {
 
 // static uint64_t g_send_pkt_cnt = 0;		// 发送数据包总数
 // static uint64_t g_recv_pkt_cnt = 0;		// 接收数据包总数
@@ -186,3 +187,5 @@ void imconn_callback(void* callback_data, uint8_t msg, uint32_t handle, void* pP
 
   pConn->ReleaseRef();
 }
+
+}  // namespace teamtalk::imcore::netlib

@@ -7,11 +7,11 @@
 */
 
 #include <exception>
-#include <imcore/ostype.h>
-#include <imcore/operation/operation.h>
-#include <imcore/operation/tt_exception.h>
+#include <teamtalk/imcore/netlib/ostype.h>
+#include <teamtalk/imcore/netlib/operation/operation.h>
+#include <teamtalk/imcore/netlib/operation/tt_exception.h>
 
-namespace imcore {
+namespace teamtalk::imcore::netlib {
 
 const std::string OPERATION_NAME_COMMON = "operation_name_common";
 
@@ -42,4 +42,4 @@ void Operation::release() {
   delete this;
 }
 
-}  // namespace imcore
+}  // namespace teamtalk::imcore::netlib
