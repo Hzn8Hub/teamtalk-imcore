@@ -51,6 +51,7 @@ endif()
 include_directories(
     ${CMAKE_SOURCE_DIR}/include
     ${CMAKE_SOURCE_DIR}/include/teamtalk/imcore/ttidl
+    ${CMAKE_SOURCE_DIR}/src
     ${SDK_DIR}/protobuf/include                 # protobuf 头文件
     ${SDK_DIR}/spdlog/include                   # spdlog 头文件
     ${SDK_DIR}/jsoncpp/include                  # jsoncpp 头文件

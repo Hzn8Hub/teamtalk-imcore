@@ -53,7 +53,10 @@
 #define SOCKOPT_PTR(x) (x)
 #endif
 
-#define NOTUSED_ARG(v) ((void)v)  // used this to remove warning C4100, unreferenced parameter
+// used this to remove warning C4100, unreferenced parameter
+#ifndef NOTUSED_ARG
+#define NOTUSED_ARG(x) (void)(x)
+#endif
 
 typedef void (*callback_t)(void* callback_data, uint8_t msg, uint32_t handle, void* pParam);
 
