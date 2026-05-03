@@ -6,9 +6,12 @@
  brief:
 */
 
+#include <cassert>
 #include <algorithm>
-#include <imcore/operation/operation.h>
-#include <imcore/operation/operation_manager.h>
+#include <teamtalk/imcore/slog/slog.h>
+#include <teamtalk/imcore/netlib/ostype.h>
+#include <teamtalk/imcore/netlib/operation/operation.h>
+#include <teamtalk/imcore/netlib/operation/operation_manager.h>
 
 namespace teamtalk::imcore::netlib {
 
@@ -27,7 +30,7 @@ OperationManager::~OperationManager() {
   try {
     shutdown();
   } catch (...) {
-    LOG__(ERR, _T("OperationManager: shutdown throw unknown exception"));
+    log_error("OperationManager: shutdown throw unknown exception");
     assert(FALSE);
   }
 }
@@ -60,7 +63,7 @@ IMCoreErrorCode OperationManager::startup() {
         try {
           pOperation->process();
         } catch (...) {
-          LOG__(ERR, _T("OperationManager: operation threw exception"));
+          log_error("OperationManager: operation threw exception");
         }
         pOperation->release();
       }
@@ -71,7 +74,7 @@ IMCoreErrorCode OperationManager::startup() {
 }
 
 // 安全停止
-void OperationManager::shutdown(IN int seconds /*= 2000*/) {
+void OperationManager::shutdown(int seconds /*= 2000*/) {
   m_bContinue.store(false);
   m_cv.notify_all();
 
@@ -83,13 +86,13 @@ void OperationManager::shutdown(IN int seconds /*= 2000*/) {
   while (m_operationThread.joinable()) {
     auto elapsed = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now() - start);
     if (elapsed.count() > seconds * 1000) {
-      LOG__(ERR, _T("OperationManager::shutdown timeout waiting for thread join"));
+      log_error("OperationManager::shutdown timeout waiting for thread join");
       break;
     }
     try {
       m_operationThread.join();
     } catch (...) {
-      LOG__(ERR, _T("OperationManager::shutdown join failed"));
+      log_error("OperationManager::shutdown join failed");
       break;
     }
   }
@@ -100,7 +103,7 @@ void OperationManager::shutdown(IN int seconds /*= 2000*/) {
     try {
       pOperation->release();
     } catch (...) {
-      LOG__(ERR, _T("OperationManager: operation release threw exception"));
+      log_error("OperationManager: operation release threw exception");
     }
   }
   m_vecRealtimeOperations.clear();
@@ -113,9 +116,9 @@ void OperationManager::shutdown(IN int seconds /*= 2000*/) {
   m_vecDelayOperations.clear();
 }
 
-IMCoreErrorCode OperationManager::startOperation(IN Operation* pOperation, Int32 delay) {
+IMCoreErrorCode OperationManager::startOperation(Operation* pOperation, Int32 delay) {
   if (!pOperation) {
-    LOG__(ERR, _T("startOperation pOperation nullptr"));
+    log_error("startOperation pOperation nullptr");
     return IMCORE_ARGUMENT_ERROR;
   }
 
@@ -151,7 +154,7 @@ IMCoreErrorCode OperationManager::clearOperationByName(std::string oper_name) {
   std::lock_guard<std::mutex> locker(m_mutexOperation);
   auto iter = std::remove_if(m_vecRealtimeOperations.begin(), m_vecRealtimeOperations.end(), [&](Operation* pOper) {
     if (pOper->getName() == oper_name) {
-      LOG__(APP, _T("clearOperationByName - %S"), oper_name.c_str());
+      log_info("clearOperationByName - %s", oper_name.c_str());
       pOper->release();
       return true;
     }

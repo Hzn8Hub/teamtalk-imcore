@@ -38,7 +38,7 @@ int IMLibCoreConnect(std::string ip, int port);
 int IMLibCoreWrite(int key, uchar_t* data, uint32_t size);
 void IMLibCoreShutdown(int key);
 void IMLibCoreClose(int key);
-void IMLibCoreRegisterCallback(int handle, ITcpSocketCallback* pCB);
+// void IMLibCoreRegisterCallback(int handle, ITcpSocketCallback* pCB);
 void IMLibCoreUnRegisterCallback(int handle);
 
 // operation

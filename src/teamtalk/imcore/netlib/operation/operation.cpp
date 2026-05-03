@@ -6,7 +6,9 @@
  brief: 封装的操作对象operation
 */
 
+#include <cassert>
 #include <exception>
+#include <teamtalk/imcore/slog/slog.h>
 #include <teamtalk/imcore/netlib/ostype.h>
 #include <teamtalk/imcore/netlib/operation/operation.h>
 #include <teamtalk/imcore/netlib/operation/tt_exception.h>
@@ -27,13 +29,13 @@ void Operation::process() {
     processOpertion();
   } catch (Exception& exc) {
     assert(false);
-    LOG__(ERR, _T("process exception,reason:%s"), exc.what());
+    log_error("process exception,reason:%s", exc.what());
   } catch (std::exception& exc) {
     assert(false);
-    LOG__(ERR, _T("process exception,reason:%s"), exc.what());
+    log_error("process exception,reason:%s", exc.what());
   } catch (...) {
     assert(false);
-    LOG__(ERR, _T("process unknown exception"));
+    log_error("process unknown exception");
   }
   m_optState = OPERATION_FINISHED;
 }

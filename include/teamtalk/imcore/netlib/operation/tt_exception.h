@@ -16,10 +16,10 @@ namespace teamtalk::imcore::netlib {
 
 struct Exception : public std::exception {
  public:
-  Exception(int32_t errorCode, const std::string& msg) : m_ErrorCode(errorCode), m_msg(msg) {}
+  Exception(int32_t error_code, const std::string& error_msg) : erro_code_(error_code), error_msg_(error_msg) {}
  public:
-  int32_t m_ErrorCode;
-  std::string m_Message;
+  int32_t erro_code_;
+  std::string error_msg_;
 };
 
 }  // namespace teamtalk::imcore::netlib

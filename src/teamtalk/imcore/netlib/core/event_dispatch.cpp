@@ -6,6 +6,8 @@
  brief: 事件调度器 处理事件的调度与触发
 */
 
+#include <list>
+#include <mutex>
 #include <teamtalk/imcore/slog/slog.h>
 #include <teamtalk/imcore/netlib/core/base_socket.h>
 #include <teamtalk/imcore/netlib/core/event_dispatch.h>
@@ -42,7 +44,7 @@ CEventDispatch::~CEventDispatch() {
 }
 
 void CEventDispatch::AddTimer(callback_t callback, void* user_data, uint64_t interval) {
-  list<TimerItem*>::iterator it;
+  std::list<TimerItem*>::iterator it;
   for (it = m_timer_list.begin(); it != m_timer_list.end(); it++) {
     TimerItem* pItem = *it;
     if (pItem->callback == callback && pItem->user_data == user_data) {
@@ -63,7 +65,7 @@ void CEventDispatch::AddTimer(callback_t callback, void* user_data, uint64_t int
 }
 
 void CEventDispatch::RemoveTimer(callback_t callback, void* user_data) {
-  list<TimerItem*>::iterator it;
+  std::list<TimerItem*>::iterator it;
   for (it = m_timer_list.begin(); it != m_timer_list.end(); it++) {
     TimerItem* pItem = *it;
     if (pItem->callback == callback && pItem->user_data == user_data) {
@@ -84,7 +86,7 @@ void CEventDispatch::AddLoop(callback_t callback, void* user_data) {
 // 定时事件执行
 void CEventDispatch::_CheckTimer() {
   uint64_t curr_tick = get_tick_count();
-  list<TimerItem*>::iterator it;
+  std::list<TimerItem*>::iterator it;
   for (it = m_timer_list.begin(); it != m_timer_list.end();) {
     TimerItem* pItem = *it;
     it++;  // 迭代器可能被回调函数删除，所以应该在回调函数之前递增
@@ -97,7 +99,7 @@ void CEventDispatch::_CheckTimer() {
 
 // 循环事件执行
 void CEventDispatch::_CheckLoop() {
-  for (list<TimerItem*>::iterator it = m_loop_list.begin(); it != m_loop_list.end(); it++) {
+  for (std::list<TimerItem*>::iterator it = m_loop_list.begin(); it != m_loop_list.end(); it++) {
     TimerItem* pItem = *it;
     pItem->callback(pItem->user_data, NETLIB_MSG_LOOP, 0, NULL);
   }
@@ -284,6 +286,7 @@ void CEventDispatch::StopDispatch() {
 
 #else
 void CEventDispatch::AddEvent(SOCKET fd, uint8_t socket_event) {
+  NOTUSED_ARG(socket_event);
   struct epoll_event ev;
   ev.events = EPOLLIN | EPOLLOUT | EPOLLET | EPOLLPRI | EPOLLERR | EPOLLHUP;
   ev.data.fd = fd;
@@ -292,6 +295,7 @@ void CEventDispatch::AddEvent(SOCKET fd, uint8_t socket_event) {
 }
 
 void CEventDispatch::RemoveEvent(SOCKET fd, uint8_t socket_event) {
+  NOTUSED_ARG(socket_event);
   int ret = epoll_ctl(m_epfd, EPOLL_CTL_DEL, fd, NULL);
   if (ret != 0)
     log_error("epoll_ctl failed, errno=%d", errno);

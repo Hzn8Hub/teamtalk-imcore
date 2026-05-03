@@ -23,14 +23,14 @@
 namespace teamtalk::imcore::netlib {
 
 enum {
-  SOCKET_STATE_IDLE,          // 空闲状态
-  SOCKET_STATE_LISTENING,     // 监听状态
-  SOCKET_STATE_CONNECTING,    // 连接中状态
-  SOCKET_STATE_CONNECTED,     // 连接成功状态
-  SOCKET_STATE_CLOSING,       // 关闭状态
+  SOCKET_STATE_IDLE = 0,        // 空闲状态
+  SOCKET_STATE_LISTENING = 1,   // 监听状态
+  SOCKET_STATE_CONNECTING = 2,  // 连接中状态
+  SOCKET_STATE_CONNECTED = 3,   // 连接成功状态
+  SOCKET_STATE_CLOSING = 4      // 关闭状态
 };
 
-class CBaseSocket : public CRefObject {
+class CBaseSocket : public teamtalk::imcore::common::CRefObject {
  public:
   CBaseSocket();
   virtual ~CBaseSocket();

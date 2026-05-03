@@ -41,7 +41,7 @@ CBaseSocket* FindBaseSocket(net_handle_t fd) {
     pSocket->AddRef();
     return pSocket;
   }
-  return pSocket;
+  return nullptr;
 }
 
 //////////////////////////////////CBaseSocket//////////////////////////////////////////////

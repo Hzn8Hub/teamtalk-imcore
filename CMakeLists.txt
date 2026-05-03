@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.10)
 project(teamtalk-imcore VERSION 1.0.0)
 
-set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 # SDK 目录（protobuf 等依赖）
@@ -64,12 +64,12 @@ link_directories(
 
 ########################################################################
 # 构建动态库
-add_library(imcore SHARED
+add_library(teamtalk-imcore SHARED
     ${PROJECT_SOURCES}
 )
 
 # 设置动态库版本号
-set_target_properties(imcore PROPERTIES
+set_target_properties(teamtalk-imcore PROPERTIES
     VERSION ${PROJECT_VERSION}
     SOVERSION 1
 )
@@ -80,7 +80,7 @@ set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib")
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin")
 
 # 链接依赖库
-target_link_libraries(imcore 
+target_link_libraries(teamtalk-imcore 
     protobuf-lite
     jsoncpp
     ${PLATFORM_LIBS}
@@ -89,7 +89,7 @@ target_link_libraries(imcore
 ########################################################################
 # 安装规则
 # 安装动态库
-install(TARGETS imcore
+install(TARGETS teamtalk-imcore
     LIBRARY DESTINATION lib
     ARCHIVE DESTINATION lib
     RUNTIME DESTINATION bin

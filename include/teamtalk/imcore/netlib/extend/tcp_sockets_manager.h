@@ -8,7 +8,7 @@
 #ifndef TEAMTALK_IMCORE_NETLIB_EXTEND_TCP_SOCKETS_MANAGER_H_
 #define TEAMTALK_IMCORE_NETLIB_EXTEND_TCP_SOCKETS_MANAGER_H_
 
-#include <teamtalk/imcore/imconn/im_conn.h>
+#include <teamtalk/imcore/netlib/imconn/conn.h>
 
 namespace teamtalk::imcore::netlib {
 
@@ -22,7 +22,7 @@ class TcpSocketsManager {
   CImConn* get_client_conn(uint32_t nHandle);
   void release_by_handle(net_handle_t handle);
   void unRegisterCallback(net_handle_t handle);
-  void registerCallback(net_handle_t handle, ITcpSocketCallback* pCB);
+  // void registerCallback(net_handle_t handle, ITcpSocketCallback* pCB);
 
  private:
   TcpSocketsManager();

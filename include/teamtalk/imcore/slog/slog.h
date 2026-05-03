@@ -1,9 +1,4 @@
 
-#ifndef TEAMTALK_IMCORE_SLOG_SLOG_H_
-#define TEAMTALK_IMCORE_SLOG_SLOG_H_
-
-#include <memory>
-
 /**
  * @file    slog.h
  * @brief   日志模块，底层封装 spdlog
@@ -26,23 +21,23 @@
  *   [2026-04-12 10:30:01.234] [INFO ] <msg_server.cpp>|<45>|<handleLogin>| server started
  */
 
+#ifndef TEAMTALK_IMCORE_SLOG_SLOG_H_
+#define TEAMTALK_IMCORE_SLOG_SLOG_H_
+
+#include <memory>
+#include <cstring>
+
 namespace teamtalk::imcore::slog {
 
-// -------------------------------------------------------------
-// 日志级别
-// -------------------------------------------------------------
 enum class SlogLevel {
-  kDebug = 0,
-  kInfo = 1,
-  kWarn = 2,
-  kError = 3,
-  kFatal = 4,
-  kOff = 5,
+  kDebug = 0,    // 调试级别
+  kInfo = 1,     // 信息级别
+  kWarn = 2,     // 警告级别
+  kError = 3,    // 错误级别
+  kFatal = 4,    // 严重错误级别
+  kOff = 5,      // 关闭级别
 };
 
-// -------------------------------------------------------------
-// Slog 类：通过 Default() 获取进程级单例
-// -------------------------------------------------------------
 class Slog {
  public:
   Slog();
@@ -80,26 +75,28 @@ class Slog {
   std::unique_ptr<Impl> impl_;
 };
 
-// -------------------------------------------------------------
-// 日志宏（唯一推荐的使用方式）
-// -------------------------------------------------------------
+}  // namespace teamtalk::imcore::slog
+
 #ifdef _WIN32
 #define SLOG_FILENAME (strrchr(__FILE__, '\\') ? strrchr(__FILE__, '\\') + 1 : __FILE__)
 #else
 #define SLOG_FILENAME (strrchr(__FILE__, '/') ? strrchr(__FILE__, '/') + 1 : __FILE__)
 #endif
 
-#define log_debug(fmt, ...) \
-  Slog::Default().Write(SlogLevel::kDebug, SLOG_FILENAME, __LINE__, __FUNCTION__, fmt, ##__VA_ARGS__)
-#define log_info(fmt, ...) \
-  Slog::Default().Write(SlogLevel::kInfo, SLOG_FILENAME, __LINE__, __FUNCTION__, fmt, ##__VA_ARGS__)
-#define log_warn(fmt, ...) \
-  Slog::Default().Write(SlogLevel::kWarn, SLOG_FILENAME, __LINE__, __FUNCTION__, fmt, ##__VA_ARGS__)
-#define log_error(fmt, ...) \
-  Slog::Default().Write(SlogLevel::kError, SLOG_FILENAME, __LINE__, __FUNCTION__, fmt, ##__VA_ARGS__)
-#define log_fatal(fmt, ...) \
-  Slog::Default().Write(SlogLevel::kFatal, SLOG_FILENAME, __LINE__, __FUNCTION__, fmt, ##__VA_ARGS__)
-
-}  // namespace teamtalk::imcore::slog
+#define log_debug(fmt, ...)                                                               \
+  ::teamtalk::imcore::slog::Slog::Default().Write(::teamtalk::imcore::slog::SlogLevel::kDebug, \
+                                                   SLOG_FILENAME, __LINE__, __FUNCTION__, fmt, ##__VA_ARGS__)
+#define log_info(fmt, ...)                                                               \
+  ::teamtalk::imcore::slog::Slog::Default().Write(::teamtalk::imcore::slog::SlogLevel::kInfo, \
+                                                  SLOG_FILENAME, __LINE__, __FUNCTION__, fmt, ##__VA_ARGS__)
+#define log_warn(fmt, ...)                                                               \
+  ::teamtalk::imcore::slog::Slog::Default().Write(::teamtalk::imcore::slog::SlogLevel::kWarn, \
+                                                  SLOG_FILENAME, __LINE__, __FUNCTION__, fmt, ##__VA_ARGS__)
+#define log_error(fmt, ...)                                                               \
+  ::teamtalk::imcore::slog::Slog::Default().Write(::teamtalk::imcore::slog::SlogLevel::kError, \
+                                                  SLOG_FILENAME, __LINE__, __FUNCTION__, fmt, ##__VA_ARGS__)
+#define log_fatal(fmt, ...)                                                               \
+  ::teamtalk::imcore::slog::Slog::Default().Write(::teamtalk::imcore::slog::SlogLevel::kFatal, \
+                                                  SLOG_FILENAME, __LINE__, __FUNCTION__, fmt, ##__VA_ARGS__)
 
 #endif  // TEAMTALK_IMCORE_SLOG_SLOG_H_

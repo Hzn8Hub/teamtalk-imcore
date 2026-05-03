@@ -13,10 +13,10 @@
 namespace teamtalk::imcore::common {
 
 // 引用计数对象类
-class RefObject {
+class CRefObject {
  public:
-  RefObject();
-  virtual ~RefObject();
+ CRefObject();
+  virtual ~CRefObject();
 
   void AddRef();
   void ReleaseRef();

@@ -6,6 +6,7 @@
  brief: 各种工具类封装
 */
 
+#include <cstdio>
 #include <sstream>
 #include <teamtalk/imcore/netlib/utils/basic_tools.h>
 
@@ -50,7 +51,7 @@ void writePid() {
   FILE* f = fopen("server.pid", "w");
   assert(f);
   char szPid[32];
-  sprintf_s(szPid, sizeof(szPid), "%d", curPid);
+  snprintf(szPid, sizeof(szPid), "%d", curPid);
   fwrite(szPid, strlen(szPid), 1, f);
   fclose(f);
 }
@@ -124,13 +125,13 @@ char* long2ip(const unsigned int in) {
   v2 = (in >> 16) % 256;
   v1 = (in >> 24) % 256;
   static char output[16];
-  sprintf_s(output, sizeof(output), "%hd.%hd.%hd.%hd", v1, v2, v3, v4);
+  snprintf(output, sizeof(output), "%hd.%hd.%hd.%hd", v1, v2, v3, v4);
   return output;
 }
 
 unsigned int ip2long(const char* ip) {
   unsigned short v1, v2, v3, v4;
-  sscanf_s(ip, "%hd.%hd.%hd.%hd", &v1, &v2, &v3, &v4);
+  sscanf(ip, "%hd.%hd.%hd.%hd", &v1, &v2, &v3, &v4);
   unsigned int vl = (v1 << 24) + (v2 << 16) + (v3 << 8) + v4;
   return vl;
 }

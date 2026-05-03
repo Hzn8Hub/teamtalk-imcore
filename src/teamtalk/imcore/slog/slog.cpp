@@ -20,19 +20,17 @@ namespace teamtalk::imcore::slog {
 
 static constexpr int kMaxMsgLen = 1024 * 4;
 
-// -------------------------------------------------------------
-// 内部辅助（文件作用域）
-// -------------------------------------------------------------
 namespace {
+using namespace teamtalk::imcore::string;
 struct SlogConf {
-  std::string name = "default";
-  std::string log_path = "./log/imcore.log";
-  SlogLevel level = SlogLevel::kInfo;
-  bool console = true;
-  bool async = true;
-  int max_size_mb = 10;
-  int max_files = 5;
-  size_t queue_size = 8192;
+  std::string name_ = "default";
+  std::string log_path_ = "./log/imcore.log";
+  SlogLevel level_ = SlogLevel::kInfo;
+  bool console_ = true;
+  bool async_ = true;
+  int32_t max_size_mb_ = 10;
+  int32_t max_files_ = 5;
+  size_t queue_size_ = 8192;
 };
 
 spdlog::level::level_enum to_spd_level(SlogLevel level) {
@@ -96,24 +94,24 @@ SlogConf parse_conf(const char* path) {
 
     int parsed = 0;
     if (k == "log_path") {
-      conf.log_path = v;
+      conf.log_path_ = v;
     } else if (k == "level") {
-      conf.level = parse_level_str(v);
+      conf.level_ = parse_level_str(v);
     } else if (k == "console") {
-      conf.console = (v == "true" || v == "1");
+      conf.console_ = (v == "true" || v == "1");
     } else if (k == "async") {
-      conf.async = (v == "true" || v == "1");
+      conf.async_ = (v == "true" || v == "1");
     } else if (k == "max_size_mb") {
       if (str_to_int(v, parsed) && parsed >= 1) {
-        conf.max_size_mb = parsed;
+        conf.max_size_mb_ = parsed;
       }
     } else if (k == "max_files") {
       if (str_to_int(v, parsed) && parsed >= 1) {
-        conf.max_files = parsed;
+        conf.max_files_ = parsed;
       }
     } else if (k == "queue_size") {
       if (str_to_int(v, parsed) && parsed >= 64) {
-        conf.queue_size = static_cast<size_t>(parsed);
+        conf.queue_size_ = static_cast<size_t>(parsed);
       }
     }
   }
@@ -126,39 +124,39 @@ SlogConf parse_conf(const char* path) {
 // Slog::Impl
 // -------------------------------------------------------------
 struct Slog::Impl {
-  std::shared_ptr<spdlog::logger> logger;
-  std::mutex mutex;
-  bool initialized = false;
+  std::shared_ptr<spdlog::logger> logger_;
+  std::mutex mtx_;
+  bool initialized_ = false;
 
   bool do_init(const SlogConf& conf) {
-    std::lock_guard<std::mutex> lk(mutex);
-    if (initialized)
+    std::lock_guard<std::mutex> lk(mtx_);
+    if (initialized_)
       return true;
 
     try {
       std::vector<spdlog::sink_ptr> sinks;
-      if (!conf.log_path.empty()) {
+      if (!conf.log_path_.empty()) {
         auto fs = std::make_shared<spdlog::sinks::rotating_file_sink_mt>(
-          conf.log_path, static_cast<size_t>(conf.max_size_mb) * 1024 * 1024, static_cast<size_t>(conf.max_files));
-        fs->set_level(to_spd_level(conf.level));
+          conf.log_path_, static_cast<size_t>(conf.max_size_mb_) * 1024 * 1024, static_cast<size_t>(conf.max_files_));
+        fs->set_level(to_spd_level(conf.level_));
         sinks.push_back(fs);
       }
-      if (conf.console) {
+      if (conf.console_) {
         auto cs = std::make_shared<spdlog::sinks::stdout_color_sink_mt>();
-        cs->set_level(to_spd_level(conf.level));
+        cs->set_level(to_spd_level(conf.level_));
         sinks.push_back(cs);
       }
 
-      if (conf.async) {
-        spdlog::init_thread_pool(conf.queue_size, 1);
-        logger = std::make_shared<spdlog::async_logger>(
-          conf.name, sinks.begin(), sinks.end(), spdlog::thread_pool(), spdlog::async_overflow_policy::block);
+      if (conf.async_) {
+        spdlog::init_thread_pool(conf.queue_size_, 1);
+        logger_ = std::make_shared<spdlog::async_logger>(
+          conf.name_, sinks.begin(), sinks.end(), spdlog::thread_pool(), spdlog::async_overflow_policy::block);
       } else {
-        logger = std::make_shared<spdlog::logger>(conf.name, sinks.begin(), sinks.end());
+        logger_ = std::make_shared<spdlog::logger>(conf.name_, sinks.begin(), sinks.end());
       }
-      logger->set_level(to_spd_level(conf.level));
-      logger->set_pattern("[%Y-%m-%d %H:%M:%S.%e] [%^%-5l%$] %v");
-      initialized = true;
+      logger_->set_level(to_spd_level(conf.level_));
+      logger_->set_pattern("[%Y-%m-%d %H:%M:%S.%e] [%^%-5l%$] %v");
+      initialized_ = true;
     } catch (const spdlog::spdlog_ex& e) {
       fprintf(stderr, "[slog] init failed: %s\n", e.what());
       return false;
@@ -167,15 +165,15 @@ struct Slog::Impl {
   }
 
   void shutdown() {
-    std::lock_guard<std::mutex> lk(mutex);
-    if (!initialized)
+    std::lock_guard<std::mutex> lk(mtx_);
+    if (!initialized_)
       return;
-    if (logger) {
-      logger->flush();
-      logger.reset();
+    if (logger_) {
+      logger_->flush();
+      logger_.reset();
     }
     spdlog::shutdown();
-    initialized = false;
+    initialized_ = false;
   }
 };
 
@@ -201,15 +199,15 @@ bool Slog::Init(const char* config_path) {
 
 bool Slog::Init(const char* log_path, SlogLevel level, bool console) {
   SlogConf conf;
-  conf.log_path = log_path ? log_path : "";
-  conf.level = level;
-  conf.console = console;
+  conf.log_path_ = log_path ? log_path : "";
+  conf.level_ = level;
+  conf.console_ = console;
   return impl_->do_init(conf);
 }
 
 void Slog::SetLevel(SlogLevel level) {
-  if (impl_->logger) {
-    impl_->logger->set_level(to_spd_level(level));
+  if (impl_->logger_) {
+    impl_->logger_->set_level(to_spd_level(level));
   }
 }
 
@@ -227,11 +225,11 @@ void Slog::Write(SlogLevel level, const char* file, int line, const char* func, 
   char buf[kMaxMsgLen + 256];
   snprintf(buf, sizeof(buf), "<%s>|<%d>|<%s>| %s", file, line, func, msg);
 
-  if (!impl_->initialized || !impl_->logger) {
+  if (!impl_->initialized_ || !impl_->logger_) {
     fprintf(stderr, "%s\n", buf);
     return;
   }
-  impl_->logger->log(to_spd_level(level), buf);
+  impl_->logger_->log(to_spd_level(level), buf);
 }
 
 // static —— Meyer's singleton，C++11 保证线程安全初始化

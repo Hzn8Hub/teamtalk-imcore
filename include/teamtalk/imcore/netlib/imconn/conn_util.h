@@ -11,7 +11,7 @@
 
 #include <google/protobuf/message_lite.h>
 #include <teamtalk/imcore/netlib/ostype.h>
-#include <teamtalk/imcore/netlib/imconn/im_conn.h>
+#include <teamtalk/imcore/netlib/imconn/conn.h>
 
 namespace teamtalk::imcore::netlib {
 

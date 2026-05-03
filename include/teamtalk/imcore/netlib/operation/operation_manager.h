@@ -43,8 +43,8 @@ class OperationManager {
 
  public:
   IMCoreErrorCode startup();
-  void shutdown(IN int seconds = 2000);
-  IMCoreErrorCode startOperation(IN Operation* pOperation, Int32 delay);
+  void shutdown(int seconds = 2000);
+  IMCoreErrorCode startOperation(Operation* pOperation, Int32 delay);
   IMCoreErrorCode startOperationWithLambda(std::function<void()> operationRun, Int32 delay, std::string oper_name);
   IMCoreErrorCode clearOperationByName(std::string oper_name);
 

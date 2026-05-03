@@ -23,6 +23,7 @@
 #include <unistd.h>
 #include <pthread.h>
 #include <sys/time.h>
+#include <sys/stat.h>
 #endif
 
 namespace teamtalk::imcore::netlib {

@@ -7,7 +7,7 @@
 */
 
 #include <mutex>
-#include <process.h>
+#include <thread>
 #include <teamtalk/imcore/netlib/core/netlib.h>
 #include <teamtalk/imcore/netlib/extend/im_core.h>
 #include <teamtalk/imcore/netlib/extend/tcp_sockets_manager.h>
@@ -20,7 +20,7 @@ static std::mutex g_lock;
 #ifdef _MSC_VER
 HANDLE g_hEventThread = NULL;
 unsigned int __stdcall event_run(void* threadArgu) {
-  LOG__(NET, _T("event_run"));
+  log_info("event_run");
   netlib_init();
   netlib_set_running();
   netlib_eventloop();
@@ -28,7 +28,7 @@ unsigned int __stdcall event_run(void* threadArgu) {
 }
 #else
 void* event_run(void* arg) {
-  LOG__(NET, _T("event_run"));
+  log_info("event_run");
   netlib_init();
   netlib_eventloop();
   return NULL;
@@ -37,7 +37,7 @@ void* event_run(void* arg) {
 
 // start/stop
 bool IMLibCoreRunEvent() {
-  LOG__(NET, _T("==============================================================================="));
+  log_info("===============================================================================");
 
   // start thread -> operation tasklist
   getOperationManager()->startup();
@@ -90,7 +90,7 @@ bool IMLibCoreIsRunning() {
 }
 
 // imcore
-int IMLibCoreConnect(string ip, int port) {
+int IMLibCoreConnect(std::string ip, int port) {
   return TcpSocketsManager::getInstance()->connect(ip.c_str(), port);
 }
 
@@ -101,53 +101,53 @@ int IMLibCoreWrite(int key, uchar_t* data, uint32_t size) {
   if (pConn) {
     pConn->Send((void*)data, size);
   } else {
-    LOG__(NET, _T("connection is invalied:%d"), key);
+    log_error("connection is invalied:%d", key);
   }
   return nRet;
 }
 
 void IMLibCoreShutdown(int key) {
-  LOG__(NET, _T("shutdown key:%d"), key);
+  log_info("shutdown key:%d", key);
   int nHandle = key;
   CImConn* pConn = TcpSocketsManager::getInstance()->get_client_conn(nHandle);
   if (pConn) {
-    pConn->Shutdown();
+    // pConn->Shutdown();
   }
 }
 
 void IMLibCoreClose(int key) {
-  LOG__(NET, _T("close key:%d"), key);
+  log_info("close key:%d", key);
   int nHandle = key;
   CImConn* pConn = TcpSocketsManager::getInstance()->get_client_conn(nHandle);
   if (pConn) {
-    pConn->Close();
+    // pConn->Close();
   }
 }
 
-void IMLibCoreRegisterCallback(int handle, ITcpSocketCallback* pCB) {
-  TcpSocketsManager::getInstance()->registerCallback(handle, pCB);
-}
+// void IMLibCoreRegisterCallback(int handle, ITcpSocketCallback* pCB) {
+//   TcpSocketsManager::getInstance()->registerCallback(handle, pCB);
+// }
 
 void IMLibCoreUnRegisterCallback(int handle) {
   TcpSocketsManager::getInstance()->unRegisterCallback(handle);
 }
 
 // operation
-void IMLibCoreStartOperation(IN Operation* pOperation, Int32 delay /*= 0*/) {
+void IMLibCoreStartOperation(Operation* pOperation, int32_t delay /*= 0*/) {
   if (getOperationManager()->startOperation(pOperation, delay) != IMCORE_OK) {
-    LOG__(ERR, _T("push operation failed"));
+    log_error("push operation failed");
   }
 }
 
-void IMLibCoreStartOperationWithLambda(std::function<void()> operationRun, Int32 delay /*= 0*/, std::string oper_name) {
+void IMLibCoreStartOperationWithLambda(std::function<void()> operationRun, int32_t delay /*= 0*/, std::string oper_name) {
   if (getOperationManager()->startOperationWithLambda(operationRun, delay, oper_name) != IMCORE_OK) {
-    LOG__(ERR, _T("push operation with lambda failed"));
+    log_error("push operation with lambda failed");
   }
 }
 
 void IMLibCoreClearOperationByName(std::string oper_name) {
   if (getOperationManager()->clearOperationByName(oper_name) != IMCORE_OK) {
-    LOG__(ERR, _T("clear operation by name failed"));
+    log_error("clear operation by name failed");
   }
 }
 

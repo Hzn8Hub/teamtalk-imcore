@@ -14,7 +14,7 @@
 #include <teamtalk/imcore/netlib/ostype.h>
 #include <teamtalk/imcore/netlib/core/netlib.h>
 #include <teamtalk/imcore/netlib/impdu/pdu_base.h>
-#include <teamtalk/imcore/utils/basic_tools.h>
+#include <teamtalk/imcore/netlib/utils/basic_tools.h>
 #include <teamtalk/imcore/common/ref_object.h>
 
 namespace teamtalk::imcore::netlib {
@@ -23,8 +23,9 @@ namespace teamtalk::imcore::netlib {
 #define SERVER_TIMEOUT 30000
 #define CLIENT_HEARTBEAT_INTERVAL 30000
 #define CLIENT_TIMEOUT 120000
+
 #define MOBILE_CLIENT_TIMEOUT 60000 * 5
-#define READ_BUF_SIZE 2048
+#define READ_BUF_SIZE (1024 * 128)
 
 /**
  * @brief CImConn
@@ -33,25 +34,31 @@ namespace teamtalk::imcore::netlib {
  * 3.通过继承CImConn对象 来实现具体的业务逻辑
  * 4.每个TCP长连接都需要绑定一个CImConn对象(Socket)
  */
-class CImConn : public CRefObject {
+class CImConn : public teamtalk::imcore::common::CRefObject {
  public:
   CImConn();
   virtual ~CImConn();
 
   bool IsBusy() { return m_busy; }
 
-  // 数据发送
+  // 连接事件处理
   int Send(void* data, int len);
-  int SendPdu(CImPdu* pPdu) { return Send(pPdu->GetBuffer(), pPdu->GetLength()); }
+  int SendPdu(CImPdu* pPdu);
 
-  // 回调处理连接的事件
-  virtual void OnConnect(net_handle_t handle) { m_handle = handle; }  // 连接建立
+  virtual void OnConnect(net_handle_t handle);                        // 连接建立
+  virtual void OnClose();                                             // 连接关闭
   virtual void OnConfirm() {}                                         // 连接确认
+
   virtual void OnRead();                                              // 数据读取
   virtual void OnWrite();                                             // 数据写入
-  virtual void OnClose() {}                                           // 连接关闭
-  virtual void OnTimer(uint64_t curr_tick) {}                         // 定时器事件
+  
+  virtual void OnTimer(uint64_t /* curr_tick */) {}                   // 定时器事件
   virtual void OnWriteCompelete(){};                                  // 写入完成事件
+
+  // 其他动作
+  // bool Connect(const char* server_ip, uint16_t server_port);
+  // bool Close();
+  // bool Shutdown();
 
   // 处理连接接收到的CImPdu对象
   virtual void HandlePdu(CImPdu* pPdu) {}

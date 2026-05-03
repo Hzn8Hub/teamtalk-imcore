@@ -9,16 +9,16 @@
 
 namespace teamtalk::imcore::common {
 
-// RefObject实现
-RefObject::RefObject() : ref_count_(1) {}
+// CRefObject实现
+CRefObject::CRefObject() : ref_count_(1) {}
 
-RefObject::~RefObject() {}
+CRefObject::~CRefObject() {}
 
-void RefObject::AddRef() {
+void CRefObject::AddRef() {
   ref_count_.fetch_add(1, std::memory_order_relaxed);
 }
 
-void RefObject::ReleaseRef() {
+void CRefObject::ReleaseRef() {
   int oldCount = ref_count_.fetch_sub(1, std::memory_order_acq_rel);
   if (oldCount == 1) {
     delete this;
