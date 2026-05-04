@@ -7,9 +7,12 @@
 */
 
 #include <teamtalk/imcore/slog/slog.h>
+#include <teamtalk/imcore/common/tools.h>
 #include <teamtalk/imcore/netlib/imconn/conn.h>
 
 namespace teamtalk::imcore::netlib {
+
+namespace ttcommon = teamtalk::imcore::common;
 
 // static uint64_t g_send_pkt_cnt = 0;		// 发送数据包总数
 // static uint64_t g_recv_pkt_cnt = 0;		// 接收数据包总数
@@ -29,8 +32,8 @@ CImConn::CImConn() {
   m_busy = false;
   m_handle = NETLIB_INVALID_HANDLE;
   m_recv_bytes = 0;
-  m_last_send_tick = get_tick_count();
-  m_last_recv_tick = get_tick_count();
+  m_last_send_tick = ttcommon::get_tick_count();
+  m_last_recv_tick = ttcommon::get_tick_count();
 }
 
 CImConn::~CImConn() {
@@ -39,7 +42,7 @@ CImConn::~CImConn() {
 
 // 向TCP连接中发送数据
 int CImConn::Send(void* data, int len) {
-  m_last_send_tick = get_tick_count();
+  m_last_send_tick = ttcommon::get_tick_count();
 
   if (m_busy) {
     m_out_buf.Write(data, len);
@@ -106,7 +109,7 @@ void CImConn::OnRead() {
       m_in_buf.Extend(READ_BUF_SIZE);
     }
 
-    log_debug("handle = %u, netlib_recv into, time = %u\n", m_handle, get_tick_count());
+    log_debug("handle = %u, netlib_recv into, time = %u\n", m_handle, ttcommon::get_tick_count());
 
     // 从连接中接收数据
     int ret = netlib_recv(m_handle, m_in_buf.GetBuffer() + m_in_buf.GetWriteOffset(), READ_BUF_SIZE);
@@ -116,7 +119,7 @@ void CImConn::OnRead() {
 
     m_recv_bytes += ret;
     m_in_buf.IncWriteOffset(ret);
-    m_last_recv_tick = get_tick_count();
+    m_last_recv_tick = ttcommon::get_tick_count();
   }
 
   // 从输入缓冲区中解析出CImPdu对象，并处理每个CImPdu对象

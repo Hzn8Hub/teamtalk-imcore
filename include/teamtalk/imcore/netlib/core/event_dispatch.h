@@ -16,7 +16,6 @@
 #include <list>
 #include <mutex>
 #include <teamtalk/imcore/netlib/ostype.h>
-#include <teamtalk/imcore/netlib/utils/basic_tools.h>
 
 namespace teamtalk::imcore::netlib {
 

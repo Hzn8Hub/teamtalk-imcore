@@ -11,11 +11,10 @@
 
 #include <string>
 #include <unordered_map>
+#include <teamtalk/imcore/common/ref_object.h>
 #include <teamtalk/imcore/netlib/ostype.h>
 #include <teamtalk/imcore/netlib/core/netlib.h>
 #include <teamtalk/imcore/netlib/impdu/pdu_base.h>
-#include <teamtalk/imcore/netlib/utils/basic_tools.h>
-#include <teamtalk/imcore/common/ref_object.h>
 
 namespace teamtalk::imcore::netlib {
 

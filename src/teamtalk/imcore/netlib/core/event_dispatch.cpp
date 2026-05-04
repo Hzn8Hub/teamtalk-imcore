@@ -9,10 +9,13 @@
 #include <list>
 #include <mutex>
 #include <teamtalk/imcore/slog/slog.h>
+#include <teamtalk/imcore/common/tools.h>
 #include <teamtalk/imcore/netlib/core/base_socket.h>
 #include <teamtalk/imcore/netlib/core/event_dispatch.h>
 
 namespace teamtalk::imcore::netlib {
+
+namespace ttcommon = teamtalk::imcore::common;
 
 #define MIN_TIMER_DURATION 100  // 100 miliseconds
 
@@ -50,7 +53,7 @@ void CEventDispatch::AddTimer(callback_t callback, void* user_data, uint64_t int
     if (pItem->callback == callback && pItem->user_data == user_data) {
       /* 更新定时器的间隔时间和下次触发时间 */
       pItem->interval = interval;
-      pItem->next_tick = get_tick_count() + interval;
+      pItem->next_tick = ttcommon::get_tick_count() + interval;
       return;
     }
   }
@@ -60,7 +63,7 @@ void CEventDispatch::AddTimer(callback_t callback, void* user_data, uint64_t int
   pItem->callback = callback;
   pItem->user_data = user_data;
   pItem->interval = interval;
-  pItem->next_tick = get_tick_count() + interval;
+  pItem->next_tick = ttcommon::get_tick_count() + interval;
   m_timer_list.push_back(pItem);
 }
 
@@ -85,7 +88,7 @@ void CEventDispatch::AddLoop(callback_t callback, void* user_data) {
 
 // 定时事件执行
 void CEventDispatch::_CheckTimer() {
-  uint64_t curr_tick = get_tick_count();
+  uint64_t curr_tick = ttcommon::get_tick_count();
   std::list<TimerItem*>::iterator it;
   for (it = m_timer_list.begin(); it != m_timer_list.end();) {
     TimerItem* pItem = *it;

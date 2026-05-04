@@ -16,9 +16,8 @@
 #ifndef TEAMTALK_IMCORE_NETLIB_CORE_BASE_SOCKET_H
 #define TEAMTALK_IMCORE_NETLIB_CORE_BASE_SOCKET_H
 
-#include <teamtalk/imcore/common/ref_object.h>
 #include <teamtalk/imcore/netlib/ostype.h>
-#include <teamtalk/imcore/netlib/utils/basic_tools.h>
+#include <teamtalk/imcore/common/ref_object.h>
 
 namespace teamtalk::imcore::netlib {
 

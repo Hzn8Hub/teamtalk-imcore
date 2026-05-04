@@ -8,7 +8,6 @@
 
 #include <teamtalk/imcore/slog/slog.h>
 #include <teamtalk/imcore/netlib/impdu/pdu_base.h>
-#include <teamtalk/imcore/netlib/utils/basic_tools.h>
 
 namespace teamtalk::imcore::netlib {
 

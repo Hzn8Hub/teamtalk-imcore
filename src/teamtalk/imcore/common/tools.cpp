@@ -1,16 +1,14 @@
-/*
- Reviser: Polaris_hzn8
- Email: 3453851623@qq.com
- filename: util.cpp
- Update Time: Mon 12 Jun 2023 17:04:14 CST
- brief: 各种工具类封装
+/**
+ * @author: luochenhao
+ * @email: lch2022fox@163.com
+ * @time: Mon 04 May 2026 17:09:26 CST
+ * @brief: 各种工具类封装
 */
 
 #include <cstdio>
-#include <sstream>
-#include <teamtalk/imcore/netlib/utils/basic_tools.h>
+#include <teamtalk/imcore/common/tools.h>
 
-namespace teamtalk::imcore::netlib {
+namespace teamtalk::imcore::common {
 
 uint64_t get_tick_count() {
 #ifdef _MSC_VER
@@ -41,17 +39,17 @@ void util_sleep(uint32_t millisecond) {
 #endif
 }
 
-void writePid() {
-  uint32_t curPid;
+void write_pid() {
+  uint32_t cur_pid;
 #ifdef _MSC_VER
-  curPid = (uint32_t)GetCurrentProcess();
+  cur_pid = (uint32_t)GetCurrentProcess();
 #else
-  curPid = (uint32_t)getpid();
+  cur_pid = (uint32_t)getpid();
 #endif
   FILE* f = fopen("server.pid", "w");
   assert(f);
   char szPid[32];
-  snprintf(szPid, sizeof(szPid), "%d", curPid);
+  snprintf(szPid, sizeof(szPid), "%d", cur_pid);
   fwrite(szPid, strlen(szPid), 1, f);
   fclose(f);
 }
@@ -136,55 +134,4 @@ unsigned int ip2long(const char* ip) {
   return vl;
 }
 
-std::string int2string(uint32_t user_id) {
-  std::stringstream ss;
-  ss << user_id;
-  return ss.str();
-}
-
-uint32_t string2int(const std::string& value) {
-  return (uint32_t)atoi(value.c_str());
-}
-
-void replace_mark(std::string& str, std::string& new_value, uint32_t& begin_pos) {
-  std::string::size_type pos = str.find('?', begin_pos);
-  if (pos == std::string::npos) {
-    return;
-  }
-
-  std::string prime_new_value = "'" + new_value + "'";
-  str.replace(pos, 1, prime_new_value);
-
-  begin_pos = pos + prime_new_value.size();
-}
-
-void replace_mark(std::string& str, uint32_t new_value, uint32_t& begin_pos) {
-  std::stringstream ss;
-  ss << new_value;
-
-  std::string str_value = ss.str();
-  std::string::size_type pos = str.find('?', begin_pos);
-  if (pos == std::string::npos) {
-    return;
-  }
-
-  str.replace(pos, 1, str_value);
-  begin_pos = pos + str_value.size();
-}
-
-char* replaceStr(char* pSrc, char oldChar, char newChar) {
-  if (NULL == pSrc) {
-    return NULL;
-  }
-
-  char* pHead = pSrc;
-  while (*pHead != '\0') {
-    if (*pHead == oldChar) {
-      *pHead = newChar;
-    }
-    ++pHead;
-  }
-  return pSrc;
-}
-
-}  // namespace teamtalk::imcore::netlib
+}  // namespace teamtalk::imcore::common

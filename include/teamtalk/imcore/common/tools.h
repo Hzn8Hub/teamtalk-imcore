@@ -1,13 +1,13 @@
-/*
- Reviser: Polaris_hzn8
- Email: 3453851623@qq.com
- filename: utility.h
- Update Time: Mon 12 Jun 2023 17:04:05 CST
- brief: 各种工具类封装
+/**
+ * @author: luochenhao
+ * @email: lch2022fox@163.com
+ * @time: Mon 04 May 2026 17:08:30 CST
+ * @brief: 
 */
 
-#ifndef TEAMTALK_IMCORE_NETLIB_UTILS_BASIC_TOOLS_H_
-#define TEAMTALK_IMCORE_NETLIB_UTILS_BASIC_TOOLS_H_
+
+#ifndef TEAMTALK_IMCORE_COMMON_TOOLS_H_
+#define TEAMTALK_IMCORE_COMMON_TOOLS_H_
 
 #include <string>
 #include <stdio.h>
@@ -26,7 +26,7 @@
 #include <sys/stat.h>
 #endif
 
-namespace teamtalk::imcore::netlib {
+namespace teamtalk::imcore::common {
 
 /// @brief 获取单调递增的时间戳（毫秒）
 /// @return 自系统启动或高精度计时器起计的毫秒数；Windows 上优先使用 QueryPerformanceCounter
@@ -38,7 +38,7 @@ void util_sleep(uint32_t millisecond);
 
 /// @brief 将当前进程 ID 写入工作目录下的 server.pid 文件
 /// @note 文件打开失败时触发 assert（调试构建）
-void writePid();
+void write_pid();
 
 /// @brief 查询本地文件大小
 /// @param path 文件路径
@@ -65,35 +65,6 @@ unsigned int ip2long(const char* ip);
 /// @return 指向静态缓冲区的 C字符串；非线程安全，勿长期保存指针
 char* long2ip(const unsigned int in);
 
-/// @brief 将无符号整数转为十进制字符串
-/// @param user_id 用户 ID 或其它数值
-/// @return 十进制文本
-std::string int2string(uint32_t user_id);
-
-/// @brief 将字符串解析为无符号整数（atoi 语义）
-/// @param value 输入字符串
-/// @return 转换结果，非法前缀按 atoi 规则处理
-uint32_t string2int(const std::string& value);
-
-/// @brief 将 str 中从 begin_pos 起第一个 `?` 替换为带单引号的 new_value
-/// @param str 被修改的字符串
-/// @param new_value 替换内容（外围会加上单引号）
-/// @param begin_pos 查找起始下标，成功后会更新为替换段末尾之后的位置
-void replace_mark(std::string& str, std::string& new_value, uint32_t& begin_pos);
-
-/// @brief 将 str 中从 begin_pos 起第一个 `?` 替换为 new_value 的十进制文本
-/// @param str 被修改的字符串
-/// @param new_value 数值，会格式化为无引号十进制串
-/// @param begin_pos 查找起始下标，成功后会更新为替换段末尾之后的位置
-void replace_mark(std::string& str, uint32_t new_value, uint32_t& begin_pos);
-
-/// @brief 将 pSrc 中所有 oldChar 替换为 newChar（原地修改）
-/// @param pSrc 以空字符结尾的缓冲区，可为 nullptr
-/// @param oldChar 待替换字符
-/// @param newChar 新字符
-/// @return pSrc；若 pSrc 为 nullptr 则返回 nullptr
-char* replaceStr(char* pSrc, char oldChar, char newChar);
-
 }  // namespace teamtalk::imcore::netlib
 
-#endif  // TEAMTALK_IMCORE_NETLIB_UTILS_BASIC_TOOLS_H_
+#endif  // TEAMTALK_IMCORE_COMMON_TOOLS_H_

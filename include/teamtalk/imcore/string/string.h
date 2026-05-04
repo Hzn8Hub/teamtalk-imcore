@@ -47,6 +47,35 @@ bool str_to_int(const std::string& s, int& out);
 /// @return 找到返回匹配位置指针，未找到返回 nullptr
 const char* mem_find(const char* src_str, size_t src_len, const char* sub_str, size_t sub_len, bool forward = true);
 
+/// @brief 将无符号整数转为十进制字符串
+/// @param user_id 用户 ID 或其它数值
+/// @return 十进制文本
+std::string int2string(uint32_t value);
+
+/// @brief 将字符串解析为无符号整数（atoi 语义）
+/// @param value 输入字符串
+/// @return 转换结果，非法前缀按 atoi 规则处理
+uint32_t string2int(const std::string& value);
+
+/// @brief 将 str 中从 begin_pos 起第一个 `?` 替换为带单引号的 new_value
+/// @param str 被修改的字符串
+/// @param new_value 替换内容（外围会加上单引号）
+/// @param begin_pos 查找起始下标，成功后会更新为替换段末尾之后的位置
+void replace_mark(std::string& str, std::string& new_value, uint32_t& begin_pos);
+
+/// @brief 将 str 中从 begin_pos 起第一个 `?` 替换为 new_value 的十进制文本
+/// @param str 被修改的字符串
+/// @param new_value 数值，会格式化为无引号十进制串
+/// @param begin_pos 查找起始下标，成功后会更新为替换段末尾之后的位置
+void replace_mark(std::string& str, uint32_t new_value, uint32_t& begin_pos);
+
+/// @brief 将 pSrc 中所有 oldChar 替换为 newChar（原地修改）
+/// @param pSrc 以空字符结尾的缓冲区，可为 nullptr
+/// @param oldChar 待替换字符
+/// @param newChar 新字符
+/// @return pSrc；若 pSrc 为 nullptr 则返回 nullptr
+char* replace_str(char* pSrc, char oldChar, char newChar);
+
 }  // namespace teamtalk::imcore::string
 
 #endif  // TEAMTALK_IMCORE_STRING_STRING_H_
