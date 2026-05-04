@@ -35,9 +35,9 @@
 #define ioctlsocket ioctl
 
 #ifdef __APPLE__
+#include <sys/time.h>
 #include <sys/event.h>
 #include <sys/syscall.h>  // syscall(SYS_gettid)
-#include <sys/time.h>
 #else
 #include <sys/epoll.h>
 #endif
@@ -53,48 +53,34 @@
 #define SOCKOPT_PTR(x) (x)
 #endif
 
-// used this to remove warning C4100, unreferenced parameter
-#ifndef NOTUSED_ARG
-#define NOTUSED_ARG(x) (void)(x)
-#endif
-
-typedef void (*callback_t)(void* callback_data, uint8_t msg, uint32_t handle, void* pParam);
-
-typedef unsigned char uchar_t;
-typedef int net_handle_t;
-typedef int conn_handle_t;
-
-typedef signed char Int8;
-typedef unsigned char UInt8;
-typedef signed short Int16;
-typedef unsigned short UInt16;
-typedef signed int Int32;
-typedef unsigned int UInt32;
-// typedef signed __int64 Int64;
-// typedef unsigned __int64 UInt64;
-
-// typedef std::basic_string<char> ByteBuffer;
-// typedef std::string utf8String;
-// typedef char utf8char;
-// typedef unsigned char byte;
-
 #ifdef _WIN32
+typedef char			              int8_t;
+typedef short			              int16_t;
+typedef int				              int32_t;
+typedef	long long		            int64_t;
+typedef unsigned char	          uint8_t;
+typedef unsigned short	        uint16_t;
+typedef unsigned int	          uint32_t;
+typedef	unsigned long long	    uint64_t;
 typedef int socklen_t;
 #else
 typedef int SOCKET;
-typedef int BOOL;
-
 const int SOCKET_ERROR = -1;
 const int INVALID_SOCKET = -1;
-
-#ifndef __APPLE__
-const int TRUE = 1;
-const int FALSE = 0;
-#endif
 #endif
 
 const uint32_t INVALID_UINT32 = (uint32_t)-1;
 const uint32_t INVALID_VALUE = 0;
+
+#ifndef NOTUSED_ARG
+#define NOTUSED_ARG(x) (void)(x)  // used this to remove warning C4100, unreferenced parameter
+#endif
+
+typedef unsigned char uchar_t;
+typedef int           net_handle_t;
+typedef int           conn_handle_t;
+
+typedef void (*callback_t)(void* callback_data, uint8_t msg, uint32_t handle, void* pParam);
 
 enum { NETLIB_OK = 0, NETLIB_ERROR = -1 };
 

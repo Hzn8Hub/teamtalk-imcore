@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.10)
-project(teamtalk-imcore VERSION 1.0.0)
+project(teamtalk-imcore)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -8,12 +8,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(SDK_DIR ${CMAKE_SOURCE_DIR}/../.sdk)
 
 # 设置安装目录为 teamtalk/.sdk/teamtalk-imcore
-if(NOT CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
-    # 用户指定了安装路径，使用用户指定的
-else()
-    # 默认安装到 teamtalk/.sdk/teamtalk-imcore
-    set(CMAKE_INSTALL_PREFIX "${SDK_DIR}/teamtalk-imcore" CACHE PATH "Install directory" FORCE)
-endif()
+set(CMAKE_INSTALL_PREFIX "${SDK_DIR}/teamtalk-imcore" CACHE PATH "Install directory" FORCE)
 
 ########################################################################
 # 收集源文件和头文件
@@ -71,12 +66,6 @@ add_library(teamtalk-imcore SHARED
     ${PROJECT_SOURCES}
 )
 
-# 设置动态库版本号
-set_target_properties(teamtalk-imcore PROPERTIES
-    VERSION ${PROJECT_VERSION}
-    SOVERSION 1
-)
-
 # 输出目录
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib")
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib")
@@ -111,7 +100,6 @@ install(DIRECTORY include/
 # 构建信息
 message(STATUS "==============================================")
 message(STATUS "teamtalk-imcore build configuration:")
-message(STATUS "  Version      : ${PROJECT_VERSION}")
 message(STATUS "  Platform     : ${CMAKE_SYSTEM_NAME}")
 message(STATUS "  C++ Standard : ${CMAKE_CXX_STANDARD}")
 message(STATUS "  SDK Path     : ${SDK_DIR}")

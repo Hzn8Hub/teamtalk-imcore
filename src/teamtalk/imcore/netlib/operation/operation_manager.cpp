@@ -32,7 +32,7 @@ OperationManager::~OperationManager() {
     shutdown();
   } catch (...) {
     log_error("OperationManager: shutdown throw unknown exception");
-    assert(FALSE);
+    assert(false);
   }
 }
 
@@ -117,7 +117,7 @@ void OperationManager::shutdown(int seconds /*= 2000*/) {
   m_vecDelayOperations.clear();
 }
 
-IMCoreErrorCode OperationManager::startOperation(Operation* pOperation, Int32 delay) {
+IMCoreErrorCode OperationManager::startOperation(Operation* pOperation, int32_t delay) {
   if (!pOperation) {
     log_error("startOperation pOperation nullptr");
     return IMCORE_ARGUMENT_ERROR;
