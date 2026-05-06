@@ -43,8 +43,6 @@
 #endif
 #endif
 
-#define NETLIB_INVALID_HANDLE -1
-
 #ifdef _WIN32
 #define SOCKOPT_CAST(x) reinterpret_cast<const char*>(x)
 #define SOCKOPT_PTR(x) reinterpret_cast<char*>(x)
@@ -52,6 +50,13 @@
 #define SOCKOPT_CAST(x) (x)
 #define SOCKOPT_PTR(x) (x)
 #endif
+
+#ifndef NOTUSED_ARG
+#define NOTUSED_ARG(x) (void)(x)  // used this to remove warning C4100, unreferenced parameter
+#endif
+
+#define NETLIB_INVALID_HANDLE -1
+#define INVALID_VALUE   0
 
 #ifdef _WIN32
 typedef char			              int8_t;
@@ -69,20 +74,18 @@ const int SOCKET_ERROR = -1;
 const int INVALID_SOCKET = -1;
 #endif
 
-const uint32_t INVALID_UINT32 = (uint32_t)-1;
-const uint32_t INVALID_VALUE = 0;
-
-#ifndef NOTUSED_ARG
-#define NOTUSED_ARG(x) (void)(x)  // used this to remove warning C4100, unreferenced parameter
-#endif
-
 typedef unsigned char uchar_t;
 typedef int           net_handle_t;
 typedef int           conn_handle_t;
 
 typedef void (*callback_t)(void* callback_data, uint8_t msg, uint32_t handle, void* pParam);
 
-enum { NETLIB_OK = 0, NETLIB_ERROR = -1 };
+namespace teamtalk::imcore::netlib {
+
+enum {
+  NETLIB_OK = 0,
+  NETLIB_ERROR = -1
+};
 
 enum {
   NETLIB_MSG_CONNECT = 1,
@@ -93,5 +96,7 @@ enum {
   NETLIB_MSG_TIMER,
   NETLIB_MSG_LOOP
 };
+
+}  // namespace teamtalk::imcore::netlib
 
 #endif  // TEAMTALK_IMCORE_NETLIB_OSTYPE_H_

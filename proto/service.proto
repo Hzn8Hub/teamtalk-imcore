@@ -1,5 +1,5 @@
 
-package teamtalk.imcore.ttidl.server;
+package teamtalk.imcore.ttidl.service;
 
 import "base_define.proto";
 
