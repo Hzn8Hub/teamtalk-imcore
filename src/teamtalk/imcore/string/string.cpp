@@ -65,6 +65,19 @@ bool str_to_int(const std::string& s, int& out) {
   }
 }
 
+bool str_iequals(const std::string& str1, const std::string& str2) {
+  if (str1.size() != str2.size()) {
+    return false;
+  }
+  for (size_t i = 0; i < str1.size(); ++i) {
+    if (std::tolower(static_cast<unsigned char>(str1[i])) !=
+        std::tolower(static_cast<unsigned char>(str2[i]))) {
+      return false;
+    }
+  }
+  return true;
+}
+
 const char* mem_find(const char* src_str, size_t src_len, const char* sub_str, size_t sub_len, bool forward) {
   if (src_str == nullptr || sub_str == nullptr || src_len == 0) {
     return nullptr;

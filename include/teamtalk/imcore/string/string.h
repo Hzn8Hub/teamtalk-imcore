@@ -38,6 +38,12 @@ void str_trim(std::string& s);
 /// @return    解析成功返回 true，字符串非法或溢出返回 false
 bool str_to_int(const std::string& s, int& out);
 
+/// @brief 忽略大小写比较两个字符串是否完全相等
+/// @param str1 第一个字符串
+/// @param str2 第二个字符串
+/// @return 完全相等（忽略大小写）返回 true
+bool str_iequals(const std::string& str1, const std::string& str2);
+
 /// @brief 在内存块中查找子串
 /// @param src_str 源内存起始地址
 /// @param src_len 源内存长度

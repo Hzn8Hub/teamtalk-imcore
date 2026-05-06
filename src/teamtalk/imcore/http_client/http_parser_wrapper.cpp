@@ -5,27 +5,37 @@
  * @brief: HTTP解析器包装类实现
  */
 
+ 
+#include <string>
+#include <cstring>
+#include <cstdlib>
+#include <teamtalk/imcore/string/string.h>
+#include <teamtalk/imcore/http_client/http_parser.h>
 #include <teamtalk/imcore/http_client/http_parser_wrapper.h>
 
 namespace teamtalk::imcore::http_client {
 
 #define MAX_REFERER_LEN 32
 
-CHttpParserWrapper::CHttpParserWrapper() {}
+CHttpParserWrapper::CHttpParserWrapper()
+    : m_http_parser(std::make_unique<http_parser>())
+    , m_settings(std::make_unique<http_parser_settings>()) {}
+
+CHttpParserWrapper::~CHttpParserWrapper() = default;
 
 void CHttpParserWrapper::ParseHttpContent(const char* buf, uint32_t len) {
-  http_parser_init(&m_http_parser, HTTP_REQUEST);
-  memset(&m_settings, 0, sizeof(m_settings));
+  http_parser_init(m_http_parser.get(), HTTP_REQUEST);
+  memset(m_settings.get(), 0, sizeof(http_parser_settings));
 
-  //设置解析器的回调函数
-  m_settings.on_url = OnUrl;
-  m_settings.on_header_field = OnHeaderField;
-  m_settings.on_header_value = OnHeaderValue;
-  m_settings.on_headers_complete = OnHeadersComplete;
-  m_settings.on_body = OnBody;
-  m_settings.on_message_complete = OnMessageComplete;
+  m_settings->on_url = OnUrl;
+  m_settings->on_header_field = OnHeaderField;
+  m_settings->on_header_value = OnHeaderValue;
+  m_settings->on_headers_complete = OnHeadersComplete;
+  m_settings->on_body = OnBody;
+  m_settings->on_message_complete = OnMessageComplete;
 
-  m_settings.object = this;
+  m_settings->object = this;
+  m_http_parser->data = this;
 
   m_read_all = false;
   m_read_referer = false;
@@ -45,116 +55,115 @@ void CHttpParserWrapper::ParseHttpContent(const char* buf, uint32_t len) {
   m_content_type.clear();
   m_host.clear();
 
-  // 根据设置的回调函数逐步解析HTTP请求
-  http_parser_execute(&m_http_parser, &m_settings, buf, len);
+  http_parser_execute(m_http_parser.get(), m_settings.get(), buf, len);
+}
+
+char CHttpParserWrapper::GetMethod() {
+  return static_cast<char>(m_http_parser->method);
 }
 
 int CHttpParserWrapper::OnUrl(http_parser* parser, const char* at, size_t length, void* obj) {
-  ((CHttpParserWrapper*)obj)->SetUrl(at, length);
+  (void)parser;
+  static_cast<CHttpParserWrapper*>(obj)->SetUrl(at, length);
   return 0;
 }
 
 int CHttpParserWrapper::OnHeaderField(http_parser* parser, const char* at, size_t length, void* obj) {
-  // Referer
-  if (!((CHttpParserWrapper*)obj)->HasReadReferer()) {
-    if (strncasecmp(at, "Referer", 7) == 0) {
-      ((CHttpParserWrapper*)obj)->SetReadReferer(true);
+  (void)parser;
+  auto* w = static_cast<CHttpParserWrapper*>(obj);
+  const std::string field(at, length);
+
+  if (!w->HasReadReferer()) {
+    if (teamtalk::imcore::string::str_iequals(field, "Referer")) {
+      w->SetReadReferer(true);
     }
   }
 
-  // X-Forwarded-For
-  if (!((CHttpParserWrapper*)obj)->HasReadForwardIP()) {
-    if (strncasecmp(at, "X-Forwarded-For", 15) == 0) {
-      ((CHttpParserWrapper*)obj)->SetReadForwardIP(true);
+  if (!w->HasReadForwardIP()) {
+    if (teamtalk::imcore::string::str_iequals(field, "X-Forwarded-For")) {
+      w->SetReadForwardIP(true);
     }
   }
 
-  // User-Agent
-  if (!((CHttpParserWrapper*)obj)->HasReadUserAgent()) {
-    if (strncasecmp(at, "User-Agent", 10) == 0) {
-      ((CHttpParserWrapper*)obj)->SetReadUserAgent(true);
+  if (!w->HasReadUserAgent()) {
+    if (teamtalk::imcore::string::str_iequals(field, "User-Agent")) {
+      w->SetReadUserAgent(true);
     }
   }
 
-  // Content-Type
-  if (!((CHttpParserWrapper*)obj)->HasReadContentType()) {
-    if (strncasecmp(at, "Content-Type", 12) == 0) {
-      ((CHttpParserWrapper*)obj)->SetReadContentType(true);
+  if (!w->HasReadContentType()) {
+    if (teamtalk::imcore::string::str_iequals(field, "Content-Type")) {
+      w->SetReadContentType(true);
     }
   }
 
-  // Content-Length
-  if (!((CHttpParserWrapper*)obj)->HasReadContentLen()) {
-    if (strncasecmp(at, "Content-Length", 14) == 0) {
-      ((CHttpParserWrapper*)obj)->SetReadContentLen(true);
+  if (!w->HasReadContentLen()) {
+    if (teamtalk::imcore::string::str_iequals(field, "Content-Length")) {
+      w->SetReadContentLen(true);
     }
   }
 
-  // Host
-  if (!((CHttpParserWrapper*)obj)->HasReadHost()) {
-    if (strncasecmp(at, "Host", 4) == 0) {
-      ((CHttpParserWrapper*)obj)->SetReadHost(true);
+  if (!w->HasReadHost()) {
+    if (teamtalk::imcore::string::str_iequals(field, "Host")) {
+      w->SetReadHost(true);
     }
   }
   return 0;
 }
 
 int CHttpParserWrapper::OnHeaderValue(http_parser* parser, const char* at, size_t length, void* obj) {
-  // Referer
-  if (((CHttpParserWrapper*)obj)->IsReadReferer()) {
+  (void)parser;
+  auto* w = static_cast<CHttpParserWrapper*>(obj);
+
+  if (w->IsReadReferer()) {
     size_t referer_len = (length > MAX_REFERER_LEN) ? MAX_REFERER_LEN : length;
-    ((CHttpParserWrapper*)obj)->SetReferer(at, referer_len);
-    ((CHttpParserWrapper*)obj)->SetReadReferer(false);
+    w->SetReferer(at, referer_len);
+    w->SetReadReferer(false);
   }
 
-  // ForwardIP
-  if (((CHttpParserWrapper*)obj)->IsReadForwardIP()) {
-    ((CHttpParserWrapper*)obj)->SetForwardIP(at, length);
-    ((CHttpParserWrapper*)obj)->SetReadForwardIP(false);
+  if (w->IsReadForwardIP()) {
+    w->SetForwardIP(at, length);
+    w->SetReadForwardIP(false);
   }
 
-  // User-Agent
-  if (((CHttpParserWrapper*)obj)->IsReadUserAgent()) {
-    ((CHttpParserWrapper*)obj)->SetUserAgent(at, length);
-    ((CHttpParserWrapper*)obj)->SetReadUserAgent(false);
+  if (w->IsReadUserAgent()) {
+    w->SetUserAgent(at, length);
+    w->SetReadUserAgent(false);
   }
 
-  // Content-Type
-  if (((CHttpParserWrapper*)obj)->IsReadContentType()) {
-    ((CHttpParserWrapper*)obj)->SetContentType(at, length);
-    ((CHttpParserWrapper*)obj)->SetReadContentType(false);
+  if (w->IsReadContentType()) {
+    w->SetContentType(at, length);
+    w->SetReadContentType(false);
   }
 
-  // Content-Length
-  if (((CHttpParserWrapper*)obj)->IsReadContentLen()) {
+  if (w->IsReadContentLen()) {
     std::string strContentLen(at, length);
-    ((CHttpParserWrapper*)obj)->SetContentLen(atoi(strContentLen.c_str()));
-    ((CHttpParserWrapper*)obj)->SetReadContentLen(false);
+    w->SetContentLen(static_cast<uint32_t>(atoi(strContentLen.c_str())));
+    w->SetReadContentLen(false);
   }
 
-  // Host
-  if (((CHttpParserWrapper*)obj)->IsReadHost()) {
-    ((CHttpParserWrapper*)obj)->SetHost(at, length);
-    ((CHttpParserWrapper*)obj)->SetReadHost(false);
+  if (w->IsReadHost()) {
+    w->SetHost(at, length);
+    w->SetReadHost(false);
   }
   return 0;
 }
 
-// 请求头解析完毕
 int CHttpParserWrapper::OnHeadersComplete(http_parser* parser, void* obj) {
-  ((CHttpParserWrapper*)obj)->SetTotalLength(parser->nread + (uint32_t)parser->content_length);
+  auto* w = static_cast<CHttpParserWrapper*>(obj);
+  w->SetTotalLength(parser->nread + static_cast<uint32_t>(parser->content_length));
   return 0;
 }
 
-// 请求体解析完毕
 int CHttpParserWrapper::OnBody(http_parser* parser, const char* at, size_t length, void* obj) {
-  ((CHttpParserWrapper*)obj)->SetBodyContent(at, length);
+  (void)parser;
+  static_cast<CHttpParserWrapper*>(obj)->SetBodyContent(at, length);
   return 0;
 }
 
-// 整个消息解析完成
 int CHttpParserWrapper::OnMessageComplete(http_parser* parser, void* obj) {
-  ((CHttpParserWrapper*)obj)->SetReadAll();
+  (void)parser;
+  static_cast<CHttpParserWrapper*>(obj)->SetReadAll();
   return 0;
 }
 

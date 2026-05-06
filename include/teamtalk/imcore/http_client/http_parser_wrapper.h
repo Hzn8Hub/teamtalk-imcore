@@ -3,22 +3,24 @@
  * @email: lch2022fox@163.com
  * @time: Sun 03 May 2026 23:16:50 CST
  * @brief: HTTP解析器包装类
-*/
+ */
 
 #ifndef TEAMTALK_IMCORE_HTTP_CLIENT_HTTP_PARSER_WARPPER_H_
 #define TEAMTALK_IMCORE_HTTP_CLIENT_HTTP_PARSER_WARPPER_H_
 
+#include <memory>
 #include <string>
-#include <cstring>
-#include <stdint.h>
-#include <teamtalk/imcore/http_client/http_parser.h>
+#include <cstdint>
+
+struct http_parser;
+struct http_parser_settings;
 
 namespace teamtalk::imcore::http_client {
 
 class CHttpParserWrapper {
  public:
   CHttpParserWrapper();
-  virtual ~CHttpParserWrapper() {}
+  virtual ~CHttpParserWrapper();
 
   void ParseHttpContent(const char* buf, uint32_t len);
 
@@ -89,9 +91,8 @@ class CHttpParserWrapper {
   void SetReadForwardIP(bool read_forward_ip) { m_read_forward_ip = read_forward_ip; }
   void SetReadUserAgent(bool read_user_agent) { m_read_user_agent = read_user_agent; }
 
-  char GetMethod() { return (char)m_http_parser.method; }
+  char GetMethod();
 
-  // 解析过程回调函数
   static int OnUrl(http_parser* parser, const char* at, size_t length, void* obj);
   static int OnHeaderField(http_parser* parser, const char* at, size_t length, void* obj);
   static int OnHeaderValue(http_parser* parser, const char* at, size_t length, void* obj);
@@ -100,8 +101,8 @@ class CHttpParserWrapper {
   static int OnMessageComplete(http_parser* parser, void* obj);
 
  private:
-  http_parser m_http_parser;        // HTTP解析器对象，用于解析HTTP请求
-  http_parser_settings m_settings;  // HTTP解析器的设置，包含回调函数等配置信息
+  std::unique_ptr<http_parser> m_http_parser;
+  std::unique_ptr<http_parser_settings> m_settings;
 
   bool m_read_all;           //是否已读取全部的字段
   bool m_read_referer;       //是否已读取Referer字段
