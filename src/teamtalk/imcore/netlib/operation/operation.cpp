@@ -10,8 +10,8 @@
 #include <exception>
 #include <teamtalk/imcore/slog/slog.h>
 #include <teamtalk/imcore/netlib/ostype.h>
+#include <teamtalk/imcore/exception/exception.h>
 #include <teamtalk/imcore/netlib/operation/operation.h>
-#include <teamtalk/imcore/netlib/operation/tt_exception.h>
 
 namespace teamtalk::imcore::netlib {
 
@@ -27,7 +27,7 @@ void Operation::process() {
   try {
     m_optState = OPERATION_RUNNING;
     processOpertion();
-  } catch (Exception& exc) {
+  } catch (teamtalk::imcore::exception::Exception& exc) {
     assert(false);
     log_error("process exception,reason:%s", exc.what());
   } catch (std::exception& exc) {
