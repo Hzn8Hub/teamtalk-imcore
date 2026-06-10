@@ -13,7 +13,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <algorithm>
-#include <teamtalk/imcore/netlib/impdu/simple_buffer.h>
+#include <teamtalk/imcore/netlib/core/simple_buffer.h>
 
 namespace teamtalk::imcore::netlib {
 

@@ -3,15 +3,15 @@
  Email: 3453851623@qq.com
  filename: ImPduBase.h
  Update Time: Mon 12 Jun 2023 23:48:57 CST
- brief: 通信协议数据包定于与解析
+ brief: 通信协议数据包定义与解析
 */
 
-#ifndef TEAMTALK_IMCORE_NETLIB_IMPDU_IM_PDU_BASE_H_
-#define TEAMTALK_IMCORE_NETLIB_IMPDU_IM_PDU_BASE_H_
+#ifndef TEAMTALK_IMCORE_NETLIB_CORE_IM_PDU_H_
+#define TEAMTALK_IMCORE_NETLIB_CORE_IM_PDU_H_
 
 #include <google/protobuf/message_lite.h>
 #include <teamtalk/imcore/netlib/ostype.h>
-#include <teamtalk/imcore/netlib/impdu/simple_buffer.h>
+#include <teamtalk/imcore/netlib/core/simple_buffer.h>
 
 namespace teamtalk::imcore::netlib {
 
@@ -90,4 +90,4 @@ class CImPdu {
 
 }  // namespace teamtalk::imcore::netlib
 
-#endif  // TEAMTALK_IMCORE_NETLIB_IMPDU_IM_PDU_BASE_H_
+#endif  // TEAMTALK_IMCORE_NETLIB_CORE_IM_PDU_H_

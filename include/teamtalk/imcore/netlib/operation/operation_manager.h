@@ -17,7 +17,7 @@
 #include <atomic>
 #include <functional>
 #include <condition_variable>
-#include <teamtalk/imcore/netlib/operation/error_code.h>
+#include <teamtalk/imcore/netlib/error_code.h>
 
 namespace teamtalk::imcore::netlib {
 

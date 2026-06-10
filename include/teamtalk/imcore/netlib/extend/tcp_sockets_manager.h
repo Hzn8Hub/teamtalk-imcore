@@ -8,7 +8,7 @@
 #ifndef TEAMTALK_IMCORE_NETLIB_EXTEND_TCP_SOCKETS_MANAGER_H_
 #define TEAMTALK_IMCORE_NETLIB_EXTEND_TCP_SOCKETS_MANAGER_H_
 
-#include <teamtalk/imcore/netlib/imconn/conn.h>
+#include <teamtalk/imcore/netlib/core/im_conn.h>
 
 namespace teamtalk::imcore::netlib {
 

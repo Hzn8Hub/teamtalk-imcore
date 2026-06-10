@@ -8,8 +8,8 @@
         主要用于处理TCP长连接
 */
 
-#ifndef TEAMTALK_IMCORE_NETLIB_CORE_NETLIB_H
-#define TEAMTALK_IMCORE_NETLIB_CORE_NETLIB_H
+#ifndef TEAMTALK_IMCORE_NETLIB_CORE_NETLIB_H_
+#define TEAMTALK_IMCORE_NETLIB_CORE_NETLIB_H_
 
 #include <teamtalk/imcore/netlib/ostype.h>
 
@@ -48,4 +48,4 @@ bool netlib_is_running();
 
 }  // namespace teamtalk::imcore::netlib
 
-#endif  // TEAMTALK_IMCORE_NETLIB_CORE_NETLIB_H
+#endif  // TEAMTALK_IMCORE_NETLIB_CORE_NETLIB_H_

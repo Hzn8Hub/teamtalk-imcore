@@ -6,9 +6,9 @@
  brief:
 */
 
-#include <teamtalk/imcore/netlib/impdu/pdu_base.h>
-#include <teamtalk/imcore/netlib/imconn/conn.h>
-#include <teamtalk/imcore/netlib/imconn/conn_util.h>
+#include <teamtalk/imcore/netlib/core/im_pdu.h>
+#include <teamtalk/imcore/netlib/core/im_conn.h>
+#include <teamtalk/imcore/netlib/core/im_conn_util.h>
 
 namespace teamtalk::imcore::netlib {
 

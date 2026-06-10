@@ -3,15 +3,16 @@
  Email: 3453851623@qq.com
  filename: EventDispatch.h
  Update Time: Wed 14 Jun 2023 15:25:05 CST
- brief: 事件调度器（CEventDispatch）用于处理事件的调度和触发
-        A socket event dispatcher, features include:
-        1. portable: worked both on Windows, MAC OS X,  LINUX platform（多平台）
-        2. a singleton pattern: only one instance of this class can
- exist（应用单例模式）
+ brief: Reactor模型中的事件分发器 event_dispatch 
+      1.事件触发 - IO多路复用器
+      2.事件调度 - 事件分发器
+    主要特性：
+      1.支持跨平台 Windows, MAC OS X,  LINUX platform
+      2.单例模式 只能实例化一次
 */
 
-#ifndef TEAMTALK_IMCORE_NETLIB_CORE_EVENT_DISPATCH_H
-#define TEAMTALK_IMCORE_NETLIB_CORE_EVENT_DISPATCH_H
+#ifndef TEAMTALK_IMCORE_NETLIB_CORE_EVENT_DISPATCH_H_
+#define TEAMTALK_IMCORE_NETLIB_CORE_EVENT_DISPATCH_H_
 
 #include <list>
 #include <mutex>
@@ -77,4 +78,4 @@ class CEventDispatch {
 
 }  // namespace teamtalk::imcore::netlib
 
-#endif  // TEAMTALK_IMCORE_NETLIB_CORE_EVENT_DISPATCH_H
+#endif  // TEAMTALK_IMCORE_NETLIB_CORE_EVENT_DISPATCH_H_

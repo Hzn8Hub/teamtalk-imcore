@@ -3,18 +3,16 @@
  Email: 3453851623@qq.com
  filename: BaseSocket.h
  Update Time: Wed 14 Jun 2023 11:25:30 CST
- brief:
-        非阻塞套接字包装类/支持跨平台 CBaseSocket
-        a wrap for non-block socket class for Windows, LINUX and MacOS X platform
-         1.封装了套接字的基本操作，使网络编程更方便
-         2.支持监听和接受连接请求，可以用于创建服务器端套接字
-         3.支持发起连接到远程服务器，可以用于创建客户端套接字
-         4.提供发送和接收数据的方法，可用于在网络上进行数据的传输
-         5.处理套接字的事件，例如可读事件、可写事件和关闭事件，通过回调函数的方式进行处理
+ brief: 非阻塞套接字封装/支持跨平台 CBaseSocket
+    1.封装了套接字的基本操作，使网络编程更方便
+    2.支持监听和接受连接请求，可以用于创建服务器端套接字
+    3.支持发起连接到远程服务器，可以用于创建客户端套接字
+    4.提供发送和接收数据的方法，可用于在网络上进行数据的传输
+    5.处理套接字的事件，例如可读事件、可写事件和关闭事件，通过回调函数的方式进行处理
 */
 
-#ifndef TEAMTALK_IMCORE_NETLIB_CORE_BASE_SOCKET_H
-#define TEAMTALK_IMCORE_NETLIB_CORE_BASE_SOCKET_H
+#ifndef TEAMTALK_IMCORE_NETLIB_CORE_BASE_SOCKET_H_
+#define TEAMTALK_IMCORE_NETLIB_CORE_BASE_SOCKET_H_
 
 #include <teamtalk/imcore/netlib/ostype.h>
 #include <teamtalk/imcore/common/ref_object.h>
@@ -93,4 +91,4 @@ CBaseSocket* FindBaseSocket(net_handle_t fd);
 
 }  // namespace teamtalk::imcore::netlib
 
-#endif  // TEAMTALK_IMCORE_NETLIB_CORE_BASE_SOCKET_H
+#endif  // TEAMTALK_IMCORE_NETLIB_CORE_BASE_SOCKET_H_

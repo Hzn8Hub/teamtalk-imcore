@@ -3,18 +3,18 @@
  Email: 3453851623@qq.com
  filename: im_conn.h
  Update Time: Mon 12 Jun 2023 23:48:34 CST
- brief:
+ brief: Reactor模型中的事件处理器 event_handler
 */
 
-#ifndef TEAMTALK_IMCORE_NETLIB_IMCONN_CONN_H_
-#define TEAMTALK_IMCORE_NETLIB_IMCONN_CONN_H_
+#ifndef TEAMTALK_IMCORE_NETLIB_CORE_IM_CONN_H_
+#define TEAMTALK_IMCORE_NETLIB_CORE_IM_CONN_H_
 
 #include <string>
 #include <unordered_map>
 #include <teamtalk/imcore/common/ref_object.h>
 #include <teamtalk/imcore/netlib/ostype.h>
 #include <teamtalk/imcore/netlib/core/netlib.h>
-#include <teamtalk/imcore/netlib/impdu/pdu_base.h>
+#include <teamtalk/imcore/netlib/core/im_pdu.h>
 
 namespace teamtalk::imcore::netlib {
 
@@ -90,4 +90,4 @@ void imconn_callback(void* callback_data, uint8_t msg, uint32_t handle, void* pP
 
 }  // namespace teamtalk::imcore::netlib
 
-#endif  // TEAMTALK_IMCORE_NETLIB_IMCONN_CONN_H_
+#endif  // TEAMTALK_IMCORE_NETLIB_CORE_IM_CONN_H_

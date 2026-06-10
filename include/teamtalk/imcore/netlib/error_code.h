@@ -6,8 +6,8 @@
  brief: IMCORE本地错误码的定义,通信协议的错误码定义在PortErrorCode.h
 */
 
-#ifndef TEAMTALK_IMCORE_NETLIB_OPERATION_ERROR_CODE_H_
-#define TEAMTALK_IMCORE_NETLIB_OPERATION_ERROR_CODE_H_
+#ifndef TEAMTALK_IMCORE_NETLIB_CORE_ERROR_CODE_H_
+#define TEAMTALK_IMCORE_NETLIB_CORE_ERROR_CODE_H_
 
 namespace teamtalk::imcore::netlib {
 
@@ -35,4 +35,4 @@ const IMCoreErrorCode IMCORE_WORK_TIMER_INEXISTENCE_ERROR = IMCORE_WORK_FLAG | 0
 
 }  // namespace teamtalk::imcore::netlib
 
-#endif  // TEAMTALK_IMCORE_NETLIB_OPERATION_ERROR_CODE_H_
+#endif  // TEAMTALK_IMCORE_NETLIB_CORE_ERROR_CODE_H_

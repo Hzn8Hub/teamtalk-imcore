@@ -3,15 +3,15 @@
  Email: 3453851623@qq.com
  filename: im_conn_util.h
  Update Time: Mon 12 Jun 2023 23:47:47 CST
- brief: 消息发送相关函数
+ brief: 向TCP连接中发送消息相关辅助函数
 */
 
-#ifndef TEAMTALK_IMCORE_NETLIB_IMCONN_IM_CONN_UTIL_H_
-#define TEAMTALK_IMCORE_NETLIB_IMCONN_IM_CONN_UTIL_H_
+#ifndef TEAMTALK_IMCORE_NETLIB_CORE_IM_CONN_UTIL_H_
+#define TEAMTALK_IMCORE_NETLIB_CORE_IM_CONN_UTIL_H_
 
 #include <google/protobuf/message_lite.h>
 #include <teamtalk/imcore/netlib/ostype.h>
-#include <teamtalk/imcore/netlib/imconn/conn.h>
+#include <teamtalk/imcore/netlib/core/im_conn.h>
 
 namespace teamtalk::imcore::netlib {
 
@@ -30,4 +30,4 @@ int SendMessageLite(CImConn* conn,
 
 }  // namespace teamtalk::imcore::netlib
 
-#endif  // TEAMTALK_IMCORE_NETLIB_IMCONN_IM_CONN_UTIL_H_
+#endif  // TEAMTALK_IMCORE_NETLIB_CORE_IM_CONN_UTIL_H_

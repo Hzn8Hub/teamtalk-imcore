@@ -8,7 +8,7 @@
 
 #include <teamtalk/imcore/slog/slog.h>
 #include <teamtalk/imcore/common/tools.h>
-#include <teamtalk/imcore/netlib/imconn/conn.h>
+#include <teamtalk/imcore/netlib/core/im_conn.h>
 
 namespace teamtalk::imcore::netlib {
 

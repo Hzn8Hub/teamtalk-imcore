@@ -8,8 +8,8 @@
         2.让原本结构化的数据(字符串、整数、结构体)可以按字节流进行传输、存储或解析
 */
 
-#ifndef TEAMTALK_IMCORE_NETLIB_IMPDU_SIMPLE_BUFFER_H_
-#define TEAMTALK_IMCORE_NETLIB_IMPDU_SIMPLE_BUFFER_H_
+#ifndef TEAMTALK_IMCORE_NETLIB_CORE_SIMPLE_BUFFER_H_
+#define TEAMTALK_IMCORE_NETLIB_CORE_SIMPLE_BUFFER_H_
 
 #include <map>
 #include <set>
@@ -144,4 +144,4 @@ class CByteStream {
 
 }  // namespace teamtalk::imcore::netlib
 
-#endif  // TEAMTALK_IMCORE_NETLIB_IMPDU_SIMPLE_BUFFER_H_
+#endif  // TEAMTALK_IMCORE_NETLIB_CORE_SIMPLE_BUFFER_H_

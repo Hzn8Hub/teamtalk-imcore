@@ -7,7 +7,7 @@
 */
 
 #include <teamtalk/imcore/slog/slog.h>
-#include <teamtalk/imcore/netlib/impdu/pdu_base.h>
+#include <teamtalk/imcore/netlib/core/im_pdu.h>
 
 namespace teamtalk::imcore::netlib {
 

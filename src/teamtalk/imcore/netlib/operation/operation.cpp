@@ -9,8 +9,8 @@
 #include <cassert>
 #include <exception>
 #include <teamtalk/imcore/slog/slog.h>
-#include <teamtalk/imcore/netlib/ostype.h>
 #include <teamtalk/imcore/exception/exception.h>
+#include <teamtalk/imcore/netlib/ostype.h>
 #include <teamtalk/imcore/netlib/operation/operation.h>
 
 namespace teamtalk::imcore::netlib {
